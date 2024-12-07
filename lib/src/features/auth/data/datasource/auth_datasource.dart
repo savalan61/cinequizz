@@ -67,19 +67,6 @@ class AuthDatasource {
     }
   }
 
-  // Future<void> loginWithPassword({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   try {
-  //     await _firebaseAuth.signInWithEmailAndPassword(
-  //       email: email,
-  //       password: password,
-  //     );
-  //   } catch (e, t) {
-  //     Error.throwWithStackTrace(LogInWithPasswordFailure(e), t);
-  //   }
-  // }
   Future<void> loginWithPassword({
     required String email,
     required String password,
@@ -89,16 +76,8 @@ class AuthDatasource {
         email: email,
         password: password,
       );
-    } on FirebaseAuthException catch (e) {
-      throw AppFirebaseAuthException(e.code).message;
-    } on FirebaseException catch (e) {
-      throw AppFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-      throw const AppFormatException();
-    } on PlatformException catch (e) {
-      throw AppPlatformException(e.code).message;
-    } catch (e) {
-      throw "Something went wrong, try again.";
+    } catch (e, t) {
+      Error.throwWithStackTrace(LogInWithPasswordFailure(e), t);
     }
   }
 

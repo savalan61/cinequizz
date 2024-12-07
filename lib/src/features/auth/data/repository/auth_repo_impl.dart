@@ -58,17 +58,9 @@ class AuthRepoImpl implements AuthRepositoryIf {
         email: email,
         password: password,
       );
-      return right(null); // Successfully logged in
-    } on AppFirebaseAuthException catch (e) {
-      return left(Failure(e.message));
-    } on AppFirebaseException catch (e) {
-      return left(Failure(e.message));
-    } on AppFormatException {
-      return left(Failure("Invalid format provided."));
-    } on AppPlatformException catch (e) {
-      return left(Failure(e.message));
-    } catch (e, t) {
-      Error.throwWithStackTrace(LogInWithPasswordFailure(e.toString()), t);
+      return right(null);
+    } catch (e) {
+      return left(Failure(e.toString()));
     }
   }
 
