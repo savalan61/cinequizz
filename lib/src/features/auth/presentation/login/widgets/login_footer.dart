@@ -16,7 +16,7 @@ class LoginFooter extends StatelessWidget {
         Tappable.faded(
           fadeStrength: FadeStrength.lg,
           onTap: () {
-            context.read<CredHandlerCubit>().changeAuthPage();
+            context.read<CredHandlerCubit>().changeAuthPage(CredPage.signUp);
           },
           child: Text(
             ' Sign Up ',

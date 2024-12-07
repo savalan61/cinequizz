@@ -118,6 +118,19 @@ class AuthRepoImpl implements AuthRepositoryIf {
 
   @override
   Stream<AuthUser> get user => _authDatasource.user;
+
+  @override
+  Future<void> forgotPassword({required String email}) async {
+    try {
+      await _authDatasource.forgotPassword(
+        email: email,
+      );
+    } on ResetPasswordFailure {
+      rethrow;
+    } catch (e, t) {
+      Error.throwWithStackTrace(ResetPasswordFailure(e), t);
+    }
+  }
 }
 
 // extension on User {

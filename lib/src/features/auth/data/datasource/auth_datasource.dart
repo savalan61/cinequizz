@@ -1,7 +1,4 @@
-// ignore_for_file: flutter_style_todos
-
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cinequizz/src/core/exceptions/auth_exceptions.dart';
@@ -129,15 +126,6 @@ class AuthDatasource {
     }
   }
 
-  // Future<void> updateProfile({String? userName}) async {
-  //   try {
-  //     final user = _firebaseAuth.currentUser;
-  //     await user?.updateDisplayName(userName);
-  //   } catch (e, t) {
-  //     Error.throwWithStackTrace(UpdateProfileFailure(e), t);
-  //   }
-  // }
-
   Stream<AuthUser> get user {
     return _firebaseAuth.userChanges().map(
       (firebaseUser) {
@@ -153,6 +141,14 @@ class AuthDatasource {
       await _tokenStorage.saveToken(user.id);
     } else {
       await _tokenStorage.clearToken();
+    }
+  }
+
+  Future<void> forgotPassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e, t) {
+      Error.throwWithStackTrace(ResetPasswordFailure(e), t);
     }
   }
 }

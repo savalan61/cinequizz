@@ -1,5 +1,8 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:cinequizz/src/core/extensions/_extensions.dart';
+import 'package:cinequizz/src/core/extensions/build_context_extension.dart';
+import 'package:cinequizz/src/features/auth/presentation/credential_handler/cubit/cred_handler_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -117,6 +120,21 @@ class _LoginFormState extends State<LoginForm> {
               },
             ),
             const SizedBox(height: AppSpacing.lg),
+            Tappable.scaled(
+              onTap: () {
+                context
+                    .read<CredHandlerCubit>()
+                    .changeAuthPage(CredPage.forgotPassword);
+              },
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'forgot password?',
+                  style: context.bodyMedium!.copyWith(color: AppColors.blue),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xlg),
             ShadButton(
               width: double.infinity,
               enabled: !isLoading,

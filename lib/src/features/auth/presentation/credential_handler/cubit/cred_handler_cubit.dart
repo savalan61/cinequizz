@@ -1,6 +1,12 @@
 import 'package:bloc/bloc.dart';
 
-class CredHandlerCubit extends Cubit<bool> {
-  CredHandlerCubit() : super(true);
-  void changeAuthPage() => emit(!state);
+class CredHandlerCubit extends Cubit<CredPage> {
+  CredHandlerCubit() : super(CredPage.login);
+  void changeAuthPage(CredPage page) => emit(page);
+}
+
+enum CredPage {
+  login,
+  signUp,
+  forgotPassword;
 }
