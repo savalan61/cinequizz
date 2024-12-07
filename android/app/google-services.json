@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "816063847085",
+    "project_id": "yandex-clone",
+    "storage_bucket": "yandex-clone.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816063847085:android:1d5298d56e01ba267f0424",
+        "android_client_info": {
+          "package_name": "com.example.cinequizz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL6596RJmBiNzve8BlxhIyoX8wD1Ki1m4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816063847085:android:1af78c1a7f6559b47f0424",
+        "android_client_info": {
+          "package_name": "com.example.yandex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL6596RJmBiNzve8BlxhIyoX8wD1Ki1m4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
