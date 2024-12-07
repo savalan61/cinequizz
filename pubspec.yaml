@@ -90,13 +90,13 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: false
   image_path: "assets/images/app_logo.png"
-  adaptive_icon_foreground: "assets/images/app_logo.png" # Set the foreground image (same or different from image_path)
+  adaptive_icon_foreground: "assets/images/app_logo.png"
   adaptive_icon_background: "#141414"
   remove_alpha_ios: true
   min_sdk_android: 21
 
 flutter_native_splash:
-  color: "#DDA227" # Background color for the splash screen
-  image: assets/images/app_logo.png # Path to your splash screen image
-  android: true # Set to true if you want to enable the splash screen for Android
-  ios: true # Set to true if you want to enable the splash screen for iOS
+  color: "#141414"
+  image: assets/images/app_logo.png
+  android: true
+  ios: true
