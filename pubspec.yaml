@@ -24,7 +24,7 @@ dependencies:
   flutter_animate: ^4.5.2
   flutter_bloc: ^8.1.6
   flutter_svg: ^2.0.15
-  formz: ^0.4.1 # do not update this
+  formz: 0.4.1 # do not update this
   fpdart: ^1.1.1
   get_it: ^8.0.2
   go_router: ^14.6.1
@@ -95,8 +95,26 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   min_sdk_android: 21
 
+# flutter_native_splash:
+#   color: "#141414"
+#   color_dark: "#141414"
+#   image: assets/images/app_logo.png
+#   android: true
+#   ios: true
+
 flutter_native_splash:
   color: "#141414"
   image: assets/images/app_logo.png
-  android: true
-  ios: true
+  branding: assets/images/app_logo.png
+  branding_bottom_padding: 24
+  color_dark: "#141414"
+  image_dark: assets/images/app_logo.png
+  branding_dark: assets/images/app_logo.png
+
+  android_12:
+    image: assets/images/app_logo.png
+    icon_background_color: "#141414"
+    image_dark: assets/images/app_logo.png
+    icon_background_color_dark: "#141414"
+
+  web: false

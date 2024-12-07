@@ -59,7 +59,8 @@ class _LoginFormState extends State<LoginForm> {
           return;
         }
 
-        final snackMessage = status.isError ? state.message : null;
+        final snackMessage =
+            status.isError ? 'Something went wrong. Try again.' : null;
 
         if (snackMessage != null) {
           context.showSnackBar(snackMessage);
