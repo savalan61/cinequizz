@@ -1,3 +1,5 @@
+import 'package:cinequizz/src/features/auth/presentation/login/cubit/login_cubit.dart';
+import 'package:cinequizz/src/features/auth/presentation/sign_up/cubit/sign_up_cubit.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cinequizz/src/bootstrap.dart';
@@ -24,6 +26,12 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => ConnectivityCubit(Connectivity()),
+        ),
+        BlocProvider(
+          create: (context) => sl<SignUpCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<LoginCubit>(),
         ),
       ],
       child: const AppView(),

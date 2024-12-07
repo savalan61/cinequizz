@@ -27,18 +27,35 @@ class LoginCubit extends Cubit<LoginState> {
   }) async {
     emit(state.copyWith(submissionStatus: SubmissionStatus.inProgress));
     try {
-      await _authRepositoryIf.loginWithPassword(
+      final res = await _authRepositoryIf.loginWithPassword(
         email: email,
         password: password,
       );
-      emit(state.copyWith(submissionStatus: SubmissionStatus.success));
+      res.fold(
+        (failure) {
+          emit(
+            state.copyWith(
+              message: failure.message,
+              submissionStatus: SubmissionStatus.error,
+            ),
+          );
+        },
+        (_) {
+          emit(
+            state.copyWith(
+              submissionStatus: SubmissionStatus.success,
+            ),
+          );
+        },
+      );
     } catch (e, t) {
       addError(e, t);
-      final submissionStatus = switch (e) {
-        TimeoutException => SubmissionStatus.timeoutError,
-        _ => SubmissionStatus.error,
-      };
-      emit(state.copyWith(submissionStatus: submissionStatus));
+      emit(
+        state.copyWith(
+          submissionStatus: SubmissionStatus.error,
+          message: 'An unexpected error occurred.',
+        ),
+      );
     }
   }
 

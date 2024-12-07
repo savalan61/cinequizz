@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cinequizz/src/core/form_fields/_forms.dart';
 import 'package:cinequizz/src/core/shared/enums/_enums.dart';
 import 'package:cinequizz/src/features/auth/domain/repository/auth_repository_if.dart';
-import 'package:equatable/equatable.dart';
 
 part 'forgot_state.dart';
 

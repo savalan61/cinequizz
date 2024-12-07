@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:cinequizz/src/core/exceptions/_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cinequizz/src/core/exceptions/auth_exceptions.dart';
 import 'package:cinequizz/src/core/utils/token_storage.dart';
@@ -65,6 +67,19 @@ class AuthDatasource {
     }
   }
 
+  // Future<void> loginWithPassword({
+  //   required String email,
+  //   required String password,
+  // }) async {
+  //   try {
+  //     await _firebaseAuth.signInWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //   } catch (e, t) {
+  //     Error.throwWithStackTrace(LogInWithPasswordFailure(e), t);
+  //   }
+  // }
   Future<void> loginWithPassword({
     required String email,
     required String password,
@@ -74,8 +89,16 @@ class AuthDatasource {
         email: email,
         password: password,
       );
-    } catch (e, t) {
-      Error.throwWithStackTrace(LogInWithPasswordFailure(e), t);
+    } on FirebaseAuthException catch (e) {
+      throw AppFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw AppFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const AppFormatException();
+    } on PlatformException catch (e) {
+      throw AppPlatformException(e.code).message;
+    } catch (e) {
+      throw "Something went wrong, try again.";
     }
   }
 
@@ -98,8 +121,12 @@ class AuthDatasource {
         displayName: username,
         photoURL: photo,
       );
+    } on FirebaseAuthException catch (e) {
+      // Handling specific Firebase authentication errors
+      throw SignUpWithPasswordFailure(e.message ?? 'An unknown error occurred');
     } catch (e, t) {
-      Error.throwWithStackTrace(SignUpWithPasswordCanceled(e), t);
+      // Handling any other exceptions
+      Error.throwWithStackTrace(SignUpWithPasswordFailure(e.toString()), t);
     }
   }
 

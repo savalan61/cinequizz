@@ -6,7 +6,6 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:cinequizz/src/core/data/questions.dart';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
 import 'package:cinequizz/src/core/generated/assets.gen.dart';
-import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
 import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';

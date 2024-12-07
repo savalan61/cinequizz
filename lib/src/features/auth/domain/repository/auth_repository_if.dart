@@ -1,4 +1,6 @@
+import 'package:cinequizz/src/core/shared/class/failure.dart';
 import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
+import 'package:fpdart/fpdart.dart';
 
 abstract class AuthRepositoryIf {
   ///Stream User
@@ -11,7 +13,7 @@ abstract class AuthRepositoryIf {
     String? photo,
   });
 
-  Future<void> loginWithPassword({
+  Future<Either<Failure, void>> loginWithPassword({
     required String email,
     required String password,
   });

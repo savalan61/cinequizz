@@ -93,7 +93,7 @@ class AppRouter {
                   GoRoute(
                     path: AppRoutes.leaderboard.route,
                     name: AppRoutes.leaderboard.name,
-                    builder: (context, state) => Leaderboard(),
+                    builder: (context, state) => const Leaderboard(),
                   ),
                 ],
               ),

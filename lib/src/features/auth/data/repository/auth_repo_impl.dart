@@ -1,9 +1,12 @@
 // ignore_for_file: flutter_style_todos
 
+import 'package:cinequizz/src/core/exceptions/_exceptions.dart';
 import 'package:cinequizz/src/core/exceptions/auth_exceptions.dart';
+import 'package:cinequizz/src/core/shared/class/failure.dart';
 import 'package:cinequizz/src/features/auth/data/datasource/auth_datasource.dart';
 import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
 import 'package:cinequizz/src/features/auth/domain/repository/auth_repository_if.dart';
+import 'package:fpdart/fpdart.dart';
 
 class AuthRepoImpl implements AuthRepositoryIf {
   AuthRepoImpl({required AuthDatasource authDatasource})
@@ -46,7 +49,7 @@ class AuthRepoImpl implements AuthRepositoryIf {
   }
 
   @override
-  Future<void> loginWithPassword({
+  Future<Either<Failure, void>> loginWithPassword({
     required String email,
     required String password,
   }) async {
@@ -55,12 +58,17 @@ class AuthRepoImpl implements AuthRepositoryIf {
         email: email,
         password: password,
       );
-    } on LogInWithPasswordCanceled {
-      rethrow;
-    } on LogInWithPasswordFailure {
-      rethrow;
+      return right(null); // Successfully logged in
+    } on AppFirebaseAuthException catch (e) {
+      return left(Failure(e.message));
+    } on AppFirebaseException catch (e) {
+      return left(Failure(e.message));
+    } on AppFormatException {
+      return left(Failure("Invalid format provided."));
+    } on AppPlatformException catch (e) {
+      return left(Failure(e.message));
     } catch (e, t) {
-      Error.throwWithStackTrace(LogInWithPasswordFailure(e), t);
+      Error.throwWithStackTrace(LogInWithPasswordFailure(e.toString()), t);
     }
   }
 
