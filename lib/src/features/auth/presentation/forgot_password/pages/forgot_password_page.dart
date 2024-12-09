@@ -1,11 +1,8 @@
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
-import 'package:cinequizz/src/di.dart';
-import 'package:cinequizz/src/features/auth/presentation/forgot_password/cubit/cubit/forgot_cubit.dart';
 import 'package:cinequizz/src/features/auth/presentation/forgot_password/widgets/forgot_footer.dart';
 import 'package:cinequizz/src/features/auth/presentation/forgot_password/widgets/forgot_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});

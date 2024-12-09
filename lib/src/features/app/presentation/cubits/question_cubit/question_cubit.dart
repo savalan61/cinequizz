@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:cinequizz/src/core/theme/app_constants.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
 import 'package:cinequizz/src/features/app/domain/usecases/_usecases.dart';

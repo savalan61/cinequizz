@@ -1,6 +1,11 @@
 {
-    "cSpell.words": [
-        "mahsa",
-        "rxdart"
-    ]
+  
+  "cSpell.ignorePaths": [
+    "lib/src/core/data/questions.dart",
+  ],
+  "cSpell.language": "en",
+"cSpell.enabled": true,
+"cSpell.words": [
+    "Tuco"
+]
 }

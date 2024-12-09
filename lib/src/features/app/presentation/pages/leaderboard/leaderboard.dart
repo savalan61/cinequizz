@@ -1,5 +1,6 @@
 // ignore_for_file: cascade_invocations
 
+import 'package:cinequizz/src/core/data/dummy_users.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random_avatar/random_avatar.dart';
@@ -8,8 +9,6 @@ import 'package:cinequizz/src/core/data/questions.dart';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
-import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
-import 'package:cinequizz/src/features/auth/presentation/app/presentation/bloc/app_bloc.dart';
 
 class Leaderboard extends StatefulWidget {
   const Leaderboard({super.key});
@@ -35,7 +34,7 @@ class _LeaderboardState extends State<Leaderboard> {
       ),
       body: BlocBuilder<SeriesCubit, SeriesState>(
         builder: (context, state) {
-          final currentUserStats = state.userStats;
+          final currentUserStats = state.currentUserStats;
           if (state.status == SeriesStatus.loading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state.status == SeriesStatus.failed) {

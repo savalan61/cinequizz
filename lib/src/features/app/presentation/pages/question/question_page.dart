@@ -1,17 +1,17 @@
 // ignore_for_file: flutter_style_todos, prefer_const_constructors, avoid_redundant_argument_values, lines_longer_than_80_chars, use_build_context_synchronously, unnecessary_statements
 
+import 'dart:developer';
+
 import 'package:animated_flip_counter/animated_flip_counter.dart';
-import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
+import 'package:cinequizz/src/core/routes/app_router.dart';
+import 'package:cinequizz/src/features/app/domain/entities/answered_questions.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
-import 'package:material_dialogs/material_dialogs.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
-import 'package:cinequizz/src/core/routes/app_routes.dart';
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/di.dart';
@@ -76,19 +76,27 @@ class _QuestionViewState extends State<QuestionView> {
   Widget build(BuildContext context) {
     const bool autoStart = false;
     final serieState = context.select((SeriesCubit bloc) => bloc.state);
-    final userStats = serieState.userStats;
+    final userStats = serieState.currentUserStats;
+
+    final answeredQuestions = userStats.answeredQuestions
+        .firstWhere(
+          (element) => element.seriesId == widget.seriesId,
+          orElse: () => AnsweredQuestions.empty(),
+        )
+        .questions;
 
     final currentSeries = serieState.series.firstWhere(
       (element) => element.seriesId == widget.seriesId,
     );
+    final isLastQuestion = answeredQuestions.length == serieState.series.length;
+
     final totalScore = serieState.totalScore;
     return BlocConsumer<QuestionCubit, QuestionsState>(
       listener: (context, state) {
-        // if (state.status == Status.finished) {
-        //   final score = state.correctNo / currentSeries.questionNo;
-
-        //   scoreHandler(score, state, context);
-        // }
+        if (isLastQuestion) {
+          log('finished');
+          context.pop();
+        }
       },
       builder: (context, state) {
         return AppScaffold(
@@ -128,7 +136,7 @@ class _QuestionViewState extends State<QuestionView> {
                         height: 20,
                         child: StepProgressIndicator(
                           totalSteps: currentSeries.questionNo,
-                          currentStep: userStats.answeredQuestions.length + 1,
+                          currentStep: answeredQuestions.length + 1,
                           selectedColor: AppColors.deepBlue,
                         ),
                       ),

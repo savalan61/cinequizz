@@ -4,7 +4,6 @@ import 'package:cinequizz/src/features/app/data/datasource/app_datasource.dart';
 import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
 import 'package:cinequizz/src/features/app/domain/entities/series_entity.dart';
 import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
-import 'package:cinequizz/src/features/app/domain/entities/user_total_stats.dart';
 import 'package:cinequizz/src/features/app/domain/repositories/app_repo_if.dart';
 
 class AppRepoImpl implements AppRepoIf {

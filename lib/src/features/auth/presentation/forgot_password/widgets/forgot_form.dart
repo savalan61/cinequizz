@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
-import 'package:cinequizz/src/core/extensions/build_context_extension.dart';
 import 'package:cinequizz/src/features/auth/presentation/credential_handler/cubit/cred_handler_cubit.dart';
 import 'package:cinequizz/src/features/auth/presentation/forgot_password/cubit/cubit/forgot_cubit.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,5 @@
+import 'package:cinequizz/src/core/data/questions/saveFunction.dart';
+import 'package:cinequizz/src/core/extensions/tappable_extension.dart';
 import 'package:cinequizz/src/core/theme/app_spacing.dart';
 import 'package:cinequizz/src/features/app/domain/entities/answered_questions.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,6 @@ import 'package:cinequizz/src/core/shared/widgets/app_scaffold.dart';
 import 'package:cinequizz/src/core/theme/app_colors.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/domain/entities/series_entity.dart';
-import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
 import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
 import 'package:cinequizz/src/features/app/presentation/pages/home/widgets/series_card.dart';
 import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) => _buildSeriesCard(
                       context,
                       seriesState.series[index],
-                      seriesState.userStats.answeredQuestions.firstWhere(
+                      seriesState.currentUserStats.answeredQuestions.firstWhere(
                         (element) =>
                             element.seriesId ==
                             seriesState.series[index].seriesId,
@@ -95,7 +96,11 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.background,
       title: Row(
         children: [
-          RandomAvatar('${user.avatarSeed}', width: 50),
+          Tappable(
+              onTap: () {
+                saveAllQuestions();
+              },
+              child: RandomAvatar('${user.avatarSeed}', width: 50)),
           const SizedBox(width: AppSpacing.md),
           Text(user.name.toString()),
           const Spacer(),

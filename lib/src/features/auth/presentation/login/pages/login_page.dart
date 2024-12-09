@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
-import 'package:cinequizz/src/di.dart';
-import 'package:cinequizz/src/features/auth/presentation/login/cubit/login_cubit.dart';
 import 'package:cinequizz/src/features/auth/presentation/login/widgets/_widgets.dart';
 
 class LoginPage extends StatelessWidget {

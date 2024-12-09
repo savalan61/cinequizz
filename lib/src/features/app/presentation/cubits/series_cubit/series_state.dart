@@ -11,7 +11,7 @@ class SeriesState {
   SeriesState({
     required this.status,
     required this.series,
-    required this.userStats,
+    required this.currentUserStats,
     required this.totalScore,
     required this.filteredSeries,
     required this.totalStats,
@@ -20,7 +20,7 @@ class SeriesState {
   SeriesState.initial({
     this.series = const [],
     this.status = SeriesStatus.idl,
-    this.userStats = const UserStats.empty(),
+    this.currentUserStats = const UserStats.empty(),
     this.totalScore = 0,
     this.filteredSeries = const [],
     this.totalStats = const [],
@@ -37,7 +37,7 @@ class SeriesState {
     return SeriesState(
         status: status ?? this.status,
         series: series ?? this.series,
-        userStats: currentUserStats ?? this.userStats,
+        currentUserStats: currentUserStats ?? this.currentUserStats,
         totalScore: totalScore ?? this.totalScore,
         filteredSeries: filteredSeries ?? this.filteredSeries,
         totalStats: totalStats ?? this.totalStats);
@@ -45,7 +45,7 @@ class SeriesState {
 
   final SeriesStatus status;
   final List<SeriesEntity> series;
-  final UserStats userStats;
+  final UserStats currentUserStats;
   final int totalScore;
   final List<SeriesEntity> filteredSeries;
   final List<UserStats> totalStats;

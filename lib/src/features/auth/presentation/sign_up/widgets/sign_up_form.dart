@@ -1,12 +1,8 @@
-import 'dart:math';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
-import 'package:cinequizz/src/core/shared/widgets/drawer_view.dart';
-import 'package:cinequizz/src/features/auth/presentation/sign_up/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_dialogs/dialogs.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:cinequizz/src/core/form_fields/_forms.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';

@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
 import 'package:cinequizz/src/features/app/domain/entities/series_entity.dart';
 import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
-import 'package:cinequizz/src/features/app/domain/entities/user_total_stats.dart';
+import 'package:flutter/foundation.dart';
 
 class AppDataSource {
   AppDataSource({required FirebaseFirestore db}) : _db = db;
@@ -75,7 +75,6 @@ class AppDataSource {
           return const UserStats.empty();
         }
       } catch (e) {
-        print('Error fetching user stats: $e');
         // Optionally, return an empty UserStats object or handle the error as needed
         return const UserStats.empty();
       }
@@ -140,7 +139,9 @@ class AppDataSource {
         });
       }
     } catch (e) {
-      print('Error updating user data: $e');
+      if (kDebugMode) {
+        print('Error updating user data: $e');
+      }
     }
   }
 
@@ -155,7 +156,9 @@ class AppDataSource {
           return []; // Return an empty list if no documents exist
         }
       } catch (e) {
-        print('Error fetching all users stats: $e');
+        if (kDebugMode) {
+          print('Error fetching all users stats: $e');
+        }
         return []; // Optionally handle error by returning an empty list
       }
     });

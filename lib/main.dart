@@ -1,3 +1,4 @@
+import 'package:cinequizz/src/core/data/questions/saveFunction.dart';
 import 'package:cinequizz/src/features/auth/presentation/forgot_password/cubit/cubit/forgot_cubit.dart';
 import 'package:cinequizz/src/features/auth/presentation/login/cubit/login_cubit.dart';
 import 'package:cinequizz/src/features/auth/presentation/sign_up/cubit/sign_up_cubit.dart';
@@ -13,7 +14,6 @@ import 'package:cinequizz/src/features/auth/presentation/app/presentation/pages/
 
 void main() async {
   await bootstrap(() async {
-    // uploadSampleData();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
