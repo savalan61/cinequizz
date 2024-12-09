@@ -33,7 +33,7 @@ class AppCardTile extends StatelessWidget {
               ),
               Text(
                 title,
-                style: context.bodyLarge,
+                style: context.bodyMedium,
               ),
             ],
           ),

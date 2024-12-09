@@ -64,13 +64,13 @@ class SeriesCard extends StatelessWidget {
                     icon: LucideIcons.check,
                     title: 'Correct :',
                     trailing: correctNo.toString(),
-                    color: AppColors.green,
+                    // color: AppColors.green,
                   ),
                   AppCardTile(
                     icon: LucideIcons.x,
                     title: 'Wrong :',
                     trailing: wrongNo.toString(),
-                    color: AppColors.red,
+                    // color: AppColors.red,
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
@@ -85,7 +85,7 @@ class SeriesCard extends StatelessWidget {
                       borderWidth: 1,
                       borderRadius: 12,
                       center: Text(
-                        '(%${completedRatio.toStringAsFixed(2)}) Completing...',
+                        '(${(100 * completedRatio).toStringAsFixed(0)}%) ${completedRatio == 1 ? 'Completed' : 'Completing...'} ',
                         style: context.bodySmall,
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
 import 'package:cinequizz/src/features/app/domain/entities/user_total_stats.dart';
 import 'package:cinequizz/src/features/app/domain/repositories/app_repo_if.dart';
 
@@ -6,7 +7,7 @@ class FetchAllUsersStatsUseCase {
       : _appRepoIf = appRepoIf;
 
   final AppRepoIf _appRepoIf;
-  Stream<List<UserTotalStats>> call() {
+  Stream<List<UserStats>> call() {
     return _appRepoIf.fetchAllUsersStats();
   }
 }

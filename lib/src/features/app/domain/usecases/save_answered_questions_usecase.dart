@@ -16,22 +16,24 @@ class SaveAnsweredQuestionsUsecase implements UseCase<void, Answer> {
       questionId: answer.questionId,
       isCorrect: answer.isCorrect,
       userName: answer.userName,
+      avatarSeed: answer.avatarSeed,
     );
   }
 }
 
 class Answer {
-  Answer({
-    required this.userId,
-    required this.seriesId,
-    required this.questionId,
-    required this.isCorrect,
-    required this.userName,
-  });
+  Answer(
+      {required this.userId,
+      required this.seriesId,
+      required this.questionId,
+      required this.isCorrect,
+      required this.userName,
+      required this.avatarSeed});
 
   final String userId;
   final String seriesId;
   final String questionId;
   final bool? isCorrect;
   final String userName;
+  final String avatarSeed;
 }

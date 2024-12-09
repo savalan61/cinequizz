@@ -6,7 +6,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cinequizz/src/core/shared/class/usecase.dart';
 import 'package:cinequizz/src/features/app/domain/entities/series_entity.dart';
 import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
-import 'package:cinequizz/src/features/app/domain/entities/user_total_stats.dart';
 import 'package:cinequizz/src/features/app/domain/usecases/_usecases.dart';
 
 part 'series_state.dart';
@@ -52,15 +51,13 @@ class SeriesCubit extends Cubit<SeriesState> {
 
     userStatsStream.listen(
       (userStats) {
-        final totalCorrectNo =
-            userStats.fold(0, (sum, stats) => sum + stats.correctNo);
-        final totalWrongNo =
-            userStats.fold(0, (sum, stats) => sum + stats.wrongNo);
+        final totalCorrectNo = userStats.correctNo;
+        final totalWrongNo = userStats.wrongNo;
 
         final totalScore = (totalCorrectNo * 1000) - (totalWrongNo * 250);
         emit(
           state.copyWith(
-            userStats: userStats,
+            currentUserStats: userStats, // Pass userStats as a single-item list
             status: SeriesStatus.success,
             totalScore: totalScore,
           ),
@@ -85,6 +82,7 @@ class SeriesCubit extends Cubit<SeriesState> {
           state.copyWith(
             totalStats: userTotalStats,
             status: SeriesStatus.success,
+            // currentUserStats: state.userStats,
           ),
         );
       },

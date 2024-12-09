@@ -15,14 +15,11 @@ class QuestionCubit extends Cubit<QuestionsState> {
   QuestionCubit({
     required SeriesQuestionsUsecase seriesQuestionsUsecase,
     required SaveAnsweredQuestionsUsecase saveAnsweredQuestionsUsecase,
-    // required FetchAllUsersStatsUseCase fetchAllUsersStatsUseCase,
   })  : _seriesQuestionsUsecase = seriesQuestionsUsecase,
         _answeredQuestionsUsecase = saveAnsweredQuestionsUsecase,
-        // _fetchAllUsersStatsUseCase = fetchAllUsersStatsUseCase,
         super(QuestionsState.initial());
   final SeriesQuestionsUsecase _seriesQuestionsUsecase;
   final SaveAnsweredQuestionsUsecase _answeredQuestionsUsecase;
-  // final FetchAllUsersStatsUseCase _fetchAllUsersStatsUseCase;
   final user = (sl<AppBloc>().state as Authenticated).user;
 
   void submitAnswer({required int selectedOption}) {
@@ -33,12 +30,12 @@ class QuestionCubit extends Cubit<QuestionsState> {
 
     saveAnswer(
       Answer(
-        userId: user.id,
-        seriesId: seriesId,
-        questionId: questionId,
-        isCorrect: selectedOption < 0 ? null : isCorrect,
-        userName: user.name ?? user.email!,
-      ),
+          userId: user.id,
+          seriesId: seriesId,
+          questionId: questionId,
+          isCorrect: selectedOption < 0 ? null : isCorrect,
+          userName: user.name ?? user.email!,
+          avatarSeed: user.avatarSeed ?? 'mahsa'),
     );
     emit(
       state.copyWith(
@@ -54,7 +51,7 @@ class QuestionCubit extends Cubit<QuestionsState> {
         ],
       ),
     );
-    if (state.currentQuestionNo != AppConstants.totalQuestions - 1) {
+    if (state.currentQuestionNo != state.questions.length - 1) {
       log(state.currentQuestionNo.toString());
 
       Future.delayed(
@@ -80,6 +77,7 @@ class QuestionCubit extends Cubit<QuestionsState> {
   }
 
   Future<void> saveAnswer(Answer answer) async {
+    log('Answers saved');
     await _answeredQuestionsUsecase(answer);
   }
 

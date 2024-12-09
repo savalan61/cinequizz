@@ -1,12 +1,17 @@
-// ignore_for_file: unused_local_variable
-
+import 'dart:math';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
+import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
+import 'package:cinequizz/src/core/shared/widgets/drawer_view.dart';
+import 'package:cinequizz/src/features/auth/presentation/sign_up/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:material_dialogs/dialogs.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:cinequizz/src/core/form_fields/_forms.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/features/auth/presentation/sign_up/cubit/sign_up_cubit.dart';
+import 'package:random_avatar/random_avatar.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -18,28 +23,32 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<ShadFormState>();
   late ValueNotifier<bool> _obscure;
+  // late ValueNotifier<String> _selectedAvatar;
+  final List<String> avatarSeeds = List.generate(100, (index) => 'seed$index');
 
   @override
   void initState() {
     super.initState();
     _obscure = ValueNotifier(false);
+    // _selectedAvatar = ValueNotifier(avatarSeeds[0]); // Default selection
   }
 
   @override
   void dispose() {
     _obscure.dispose();
+    // _selectedAvatar.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context
-        .select((SignUpCubit bloc) => bloc.state.submissionStatus.isLoading);
+    final state = context.select((SignUpCubit bloc) => bloc.state);
+    final isLoading = state.submissionStatus.isLoading;
     return BlocListener<SignUpCubit, SignUpState>(
       listener: (context, state) {
         final status = state.submissionStatus;
 
-        const timeoutMessage = 'Client ran out of time. Pleas try again later';
+        const timeoutMessage = 'Client ran out of time. Please try again later';
 
         if (status.isSuccess) {
           return context.closeSnackBars();
@@ -66,7 +75,51 @@ class _SignUpFormState extends State<SignUpForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // User name Text Field
+              // Avatar Selection
+              Tappable.scaled(
+                onTap: () {
+                  context.showScrollableModal(pageBuilder: (ScrollController
+                          scrollController,
+                      DraggableScrollableController draggableScrollController) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.builder(
+                        itemCount: avatarSeeds.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 4.0,
+                                mainAxisSpacing: 4.0,
+                                crossAxisCount: 7),
+                        itemBuilder: (context, index) {
+                          return Tappable.scaled(
+                            onTap: () {
+                              context
+                                  .read<SignUpCubit>()
+                                  .onSelectAvatar(avatarSeeds[index]);
+                              context.pop();
+                            },
+                            child: RandomAvatar(avatarSeeds[index],
+                                height: 70, width: 70),
+                          );
+                        },
+                      ),
+                    );
+                  });
+                },
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Badge(
+                      alignment: Alignment.bottomRight,
+                      label: const Icon(
+                        Icons.add,
+                        size: 15,
+                      ),
+                      backgroundColor: AppColors.background,
+                      child: RandomAvatar(state.avatarSeed,
+                          height: 70, width: 70)),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md), // User name Text Field
               ShadInputFormField(
                 id: 'userName',
                 label: const Text('User Name'),
@@ -168,10 +221,13 @@ class _SignUpFormState extends State<SignUpForm> {
                   final email = fields.value['email'] as String;
                   final password = fields.value['password'] as String;
                   final userName = fields.value['userName'] as String;
+                  // final avatarSeed = _selectedAvatar.value;
+                  // Use avatarSeed as needed for profile creation
                   context.read<SignUpCubit>().onSubmit(
                         username: userName,
                         email: email,
                         password: password,
+                        // avatarSeed: avatarSeed,
                       );
                 },
               ),

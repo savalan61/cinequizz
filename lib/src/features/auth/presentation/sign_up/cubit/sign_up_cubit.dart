@@ -20,10 +20,10 @@ class SignUpCubit extends Cubit<SignUpState> {
     const password = Password.pure();
     const name = Username.pure();
     final newState = state.copyWith(
-      password: password,
-      name: name,
-      submissionStatus: SubmissionStatus.idle,
-    );
+        password: password,
+        name: name,
+        submissionStatus: SubmissionStatus.idle,
+        avatarSeed: 'mahsa');
     emit(newState);
   }
 
@@ -31,6 +31,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     required String username,
     required String email,
     required String password,
+    // required String avatarSeed,
   }) async {
     emit(state.copyWith(submissionStatus: SubmissionStatus.inProgress));
 
@@ -39,6 +40,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         username: username,
         email: email,
         password: password,
+        avatarSeed: state.avatarSeed,
       );
 
       emit(state.copyWith(submissionStatus: SubmissionStatus.success));
@@ -52,4 +54,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.copyWith(submissionStatus: submissionStatus));
     }
   }
+
+  onSelectAvatar(String avatarSeed) =>
+      emit(state.copyWith(avatarSeed: avatarSeed));
 }

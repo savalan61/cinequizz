@@ -7,8 +7,8 @@ class WelcomeImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      Assets.images.appLogo.path,
-      height: 200,
+      Assets.images.appLogo3.path,
+      height: 100,
       // cacheHeight: 200,
     );
   }

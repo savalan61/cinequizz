@@ -5,14 +5,14 @@ class AuthUser extends Equatable {
     required this.id,
     this.email,
     this.name,
-    this.photo,
+    this.avatarSeed,
     this.isNewUser = true,
   });
 
   final String id;
   final String? email;
   final String? name;
-  final String? photo;
+  final String? avatarSeed;
   final bool isNewUser;
 
   static const anonymous = AuthUser(id: '');
@@ -20,5 +20,5 @@ class AuthUser extends Equatable {
   bool get isAnonymous => this == anonymous;
 
   @override
-  List<Object?> get props => [id, email, name, photo, isNewUser];
+  List<Object?> get props => [id, email, name, avatarSeed, isNewUser];
 }

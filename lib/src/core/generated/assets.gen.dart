@@ -40,6 +40,14 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo2 =>
       const AssetGenImage('assets/images/app_logo2.png');
 
+  /// File path: assets/images/app_logo3.png
+  AssetGenImage get appLogo3 =>
+      const AssetGenImage('assets/images/app_logo3.png');
+
+  /// File path: assets/images/foodly (1).png
+  AssetGenImage get foodly1 =>
+      const AssetGenImage('assets/images/foodly (1).png');
+
   /// File path: assets/images/lose.json
   String get lose => 'packages/cinequizz/assets/images/lose.json';
 
@@ -89,6 +97,8 @@ class $AssetsImagesGen {
   List<dynamic> get values => [
         appLogo,
         appLogo2,
+        appLogo3,
+        foodly1,
         lose,
         profilePhoto,
         silverBadge,

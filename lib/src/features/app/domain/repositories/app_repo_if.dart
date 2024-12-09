@@ -8,7 +8,6 @@ import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
 import 'package:cinequizz/src/features/app/domain/entities/user_total_stats.dart';
 
 abstract interface class AppRepoIf {
-  Future<Either<Failure, List<QuestionEntity>>> fetchAllQuestions();
   Future<Either<Failure, List<SeriesEntity>>> fetchAllSeries();
   Future<Either<Failure, List<QuestionEntity>>> fetchUnansweredQuestions({
     required String userId,
@@ -21,11 +20,12 @@ abstract interface class AppRepoIf {
     required String questionId,
     required bool? isCorrect,
     required String userName,
+    required String avatarSeed,
   });
 
-  Stream<List<UserStats>> fetchUserStats({
+  Stream<UserStats> fetchUserStats({
     required String userId,
   });
 
-  Stream<List<UserTotalStats>> fetchAllUsersStats();
+  Stream<List<UserStats>> fetchAllUsersStats();
 }

@@ -1,5 +1,7 @@
 // ignore_for_file: flutter_style_todos, prefer_const_constructors, avoid_redundant_argument_values, lines_longer_than_80_chars, use_build_context_synchronously, unnecessary_statements
 
+import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,29 +70,52 @@ class QuestionView extends StatefulWidget {
 }
 
 class _QuestionViewState extends State<QuestionView> {
-  final CountDownController _controller = CountDownController();
+  final CountDownController timer = CountDownController();
 
   @override
   Widget build(BuildContext context) {
+    const bool autoStart = false;
     final serieState = context.select((SeriesCubit bloc) => bloc.state);
+    final userStats = serieState.userStats;
+
     final currentSeries = serieState.series.firstWhere(
       (element) => element.seriesId == widget.seriesId,
     );
     final totalScore = serieState.totalScore;
     return BlocConsumer<QuestionCubit, QuestionsState>(
       listener: (context, state) {
-        if (state.status == Status.finished) {
-          final score = state.correctNo / AppConstants.totalQuestions;
+        // if (state.status == Status.finished) {
+        //   final score = state.correctNo / currentSeries.questionNo;
 
-          scoreHandler(score, state, context);
-        }
+        //   scoreHandler(score, state, context);
+        // }
       },
       builder: (context, state) {
         return AppScaffold(
           safeArea: true,
           appBar: AppBar(
             centerTitle: true,
-            title: Text('Total Score: $totalScore'),
+            title: Row(
+              children: [
+                Text('Total Score: '),
+                AnimatedFlipCounter(
+                  duration: 1.seconds,
+                  value: totalScore,
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: totalScore > 0 ? AppColors.blue : AppColors.red,
+                    shadows: [
+                      BoxShadow(
+                        color: totalScore > 0 ? AppColors.blue : AppColors.red,
+                        // offset: const Offset(1, 1),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           body: state.status == Status.loaded
               ? Padding(
@@ -103,7 +128,7 @@ class _QuestionViewState extends State<QuestionView> {
                         height: 20,
                         child: StepProgressIndicator(
                           totalSteps: currentSeries.questionNo,
-                          currentStep: 3,
+                          currentStep: userStats.answeredQuestions.length + 1,
                           selectedColor: AppColors.deepBlue,
                         ),
                       ),
@@ -133,15 +158,15 @@ class _QuestionViewState extends State<QuestionView> {
                             alignment: Alignment.bottomRight,
                             child: ShadButton(
                               enabled: state.currentQuestionNo <
-                                  AppConstants.totalQuestions - 1,
+                                  currentSeries.questionNo - 1,
                               pressedBackgroundColor: Colors.transparent,
                               onPressed: () {
                                 if (state.currentQuestionNo <
-                                    AppConstants.totalQuestions - 1) {
-                                  _controller.pause();
+                                    currentSeries.questionNo - 1) {
+                                  timer.pause();
                                   Future.delayed(
                                     const Duration(seconds: 1),
-                                    _controller.start,
+                                    timer.start,
                                   );
                                   context
                                       .read<QuestionCubit>()
@@ -150,7 +175,7 @@ class _QuestionViewState extends State<QuestionView> {
                               },
                               child: Text(
                                 state.currentQuestionNo !=
-                                        AppConstants.totalQuestions - 1
+                                        currentSeries.questionNo - 1
                                     ? 'Next'
                                     : 'Finished',
                               ),
@@ -192,15 +217,15 @@ class _QuestionViewState extends State<QuestionView> {
                                     : Colors.green,
                                 onTap: () {
                                   if (state.enableBtn) {
-                                    _controller.pause();
+                                    timer.pause();
                                     context
                                         .read<QuestionCubit>()
                                         .submitAnswer(selectedOption: option);
                                     if (state.currentQuestionNo <
-                                        AppConstants.totalQuestions - 1) {
+                                        currentSeries.questionNo - 1) {
                                       Future.delayed(
                                         const Duration(seconds: 1),
-                                        _controller.start,
+                                        timer.start,
                                       );
                                     }
                                   } else {}
@@ -246,7 +271,7 @@ class _QuestionViewState extends State<QuestionView> {
                           child: CircularCountDownTimer(
                             duration: 10,
                             initialDuration: 0,
-                            controller: _controller,
+                            controller: timer,
                             width: 50,
                             height: 50,
                             ringColor: Colors.grey[300]!,
@@ -267,22 +292,20 @@ class _QuestionViewState extends State<QuestionView> {
                             isReverse: true,
                             isReverseAnimation: false,
                             isTimerTextShown: true,
-                            autoStart: false,
-                            onStart: () {
-                              // debugPrint('Countdown Started');
-                            },
+                            autoStart: autoStart,
+                            onStart: () {},
                             onComplete: () {
                               if (state.currentQuestionNo <
-                                  AppConstants.totalQuestions - 1) {
+                                  currentSeries.questionNo - 1) {
                                 context
                                     .read<QuestionCubit>()
                                     .submitAnswer(selectedOption: -1);
                                 Future.delayed(
                                   const Duration(seconds: 1),
-                                  _controller.start,
+                                  timer.start,
                                 );
                               } else {
-                                _controller.pause();
+                                timer.pause();
                               }
                             },
                             onChange: (String timeStamp) {},
@@ -310,59 +333,59 @@ class _QuestionViewState extends State<QuestionView> {
     // : SizedBox.shrink()
   }
 
-  void scoreHandler(double score, QuestionsState state, BuildContext context) {
-    String message;
-    String title;
-    String lottieAnimation;
-    String buttonText;
+//   void scoreHandler(double score, QuestionsState state, BuildContext context) {
+//     String message;
+//     String title;
+//     String lottieAnimation;
+//     String buttonText;
 
-    if (score >= 0.8) {
-      message = 'Congratulations, you won ${state.correctNo} points';
-      title = 'Congratulations';
-      lottieAnimation = 'assets/images/win.json';
-      buttonText = 'Claim';
-    } else if (score >= 0.5) {
-      message = 'Good job! You scored ${state.correctNo} points';
-      title = 'Good Job';
-      lottieAnimation = 'assets/images/win.json';
-      buttonText = 'Okay';
-    } else {
-      message = 'You scored ${state.correctNo} points. Better luck next time!';
-      title = 'Not Good';
-      lottieAnimation = 'assets/images/lose.json';
-      buttonText = 'Okay';
-    }
+//     if (score >= 0.8) {
+//       message = 'Congratulations, you won ${state.correctNo} points';
+//       title = 'Congratulations';
+//       lottieAnimation = 'assets/images/win.json';
+//       buttonText = 'Claim';
+//     } else if (score >= 0.5) {
+//       message = 'Good job! You scored ${state.correctNo} points';
+//       title = 'Good Job';
+//       lottieAnimation = 'assets/images/win.json';
+//       buttonText = 'Okay';
+//     } else {
+//       message = 'You scored ${state.correctNo} points. Better luck next time!';
+//       title = 'Not Good';
+//       lottieAnimation = 'assets/images/lose.json';
+//       buttonText = 'Okay';
+//     }
 
-    // Display the dialog
-    Dialogs.materialDialog(
-      color: AppColors.background,
-      barrierDismissible: false,
-      msg: message,
-      title: title,
-      lottieBuilder: Lottie.asset(
-        lottieAnimation,
-        fit: BoxFit.contain,
-      ),
-      context: context,
-      actionsBuilder: (BuildContext context) {
-        return [
-          ShadButton(
-            pressedBackgroundColor: Colors.transparent,
-            onPressed: () {
-              if (score >= 0.8) {
-                GoRouter.of(context).goNamed(AppRoutes.home.name);
-              } else {
-                GoRouter.of(context).goNamed(AppRoutes.home.name);
-              }
-            },
-            child: Text(
-              buttonText,
-            ),
-          ),
-        ];
-      },
-    );
-  }
+//     // Display the dialog
+//     Dialogs.materialDialog(
+//       color: AppColors.background,
+//       barrierDismissible: false,
+//       msg: message,
+//       title: title,
+//       lottieBuilder: Lottie.asset(
+//         lottieAnimation,
+//         fit: BoxFit.contain,
+//       ),
+//       context: context,
+//       actionsBuilder: (BuildContext context) {
+//         return [
+//           ShadButton(
+//             pressedBackgroundColor: Colors.transparent,
+//             onPressed: () {
+//               if (score >= 0.8) {
+//                 GoRouter.of(context).goNamed(AppRoutes.home.name);
+//               } else {
+//                 GoRouter.of(context).goNamed(AppRoutes.home.name);
+//               }
+//             },
+//             child: Text(
+//               buttonText,
+//             ),
+//           ),
+//         ];
+//       },
+//     );
+//   }
 }
 
 const optionsHeaders = ['A', 'B', 'C', 'D'];

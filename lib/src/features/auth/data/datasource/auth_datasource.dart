@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:cinequizz/src/core/exceptions/_exceptions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cinequizz/src/core/exceptions/auth_exceptions.dart';
 import 'package:cinequizz/src/core/utils/token_storage.dart';
@@ -81,11 +81,13 @@ class AuthDatasource {
     }
   }
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   Future<void> signUpWithPassword({
     required String username,
     required String email,
     required String password,
-    String? photo,
+    required String avatarSeed,
   }) async {
     try {
       final userCred = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -98,8 +100,19 @@ class AuthDatasource {
       }
       await user.updateProfile(
         displayName: username,
-        photoURL: photo,
+        photoURL: avatarSeed,
       );
+
+      // Add user to Firestore users collection
+      await _firestore.collection('users').doc(user.uid).set({
+        'userName': username,
+        'email': email,
+        'avatarSeed': avatarSeed,
+        'correctNo': 0,
+        'wrongNo': 0,
+        'answers': {},
+        'userId': user.uid,
+      });
     } on FirebaseAuthException catch (e) {
       // Handling specific Firebase authentication errors
       throw SignUpWithPasswordFailure(e.message ?? 'An unknown error occurred');
@@ -165,7 +178,7 @@ extension on User {
       id: uid,
       email: email,
       name: displayName,
-      photo: photoURL,
+      avatarSeed: photoURL,
       isNewUser: metadata.creationTime == metadata.lastSignInTime,
     );
   }

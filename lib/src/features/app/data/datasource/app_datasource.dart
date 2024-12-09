@@ -12,25 +12,73 @@ class AppDataSource {
 
   final FirebaseFirestore _db;
 
-  Future<List<QuestionEntity>> fetchAllQuestions() async {
-    try {
-      final QuerySnapshot querySnapshot =
-          await _db.collection('questions').get();
-      return querySnapshot.docs.map(QuestionEntity.fromFirestore).toList();
-    } catch (e) {
-      throw Exception('Failed to fetch Questions: $e');
+// Function to fetch all questions for a given series
+  Future<List<QuestionEntity>> fetchAllQuestions(String seriesId) async {
+    final seriesDoc = await _db.collection(seriesId).get();
+    if (seriesDoc.docs.isNotEmpty) {
+      return seriesDoc.docs
+          .map((doc) => QuestionEntity.fromFirestore(doc))
+          .toList();
+    } else {
+      return [];
     }
   }
 
-  Stream<List<UserStats>> fetchUserStats({
+// Function to fetch user's answered questions for a given series
+  Future<List<QuestionEntity>> fetchAnsweredQuestions(
+      String userId, String seriesId) async {
+    final userDoc = await _db.collection('users').doc(userId).get();
+    if (userDoc.exists) {
+      final data = userDoc.data()!;
+      final answers = data['answers'] as Map<String, dynamic>;
+      final answeredQuestions = answers[seriesId] as List<dynamic>? ?? [];
+
+      if (answeredQuestions.isNotEmpty) {
+        final answeredQuestionIds =
+            answeredQuestions.map((e) => e['questionId'] as String).toList();
+        final querySnapshot = await _db
+            .collection(seriesId)
+            .where(FieldPath.documentId, whereIn: answeredQuestionIds)
+            .get();
+        return querySnapshot.docs
+            .map((doc) => QuestionEntity.fromFirestore(doc))
+            .toList();
+      }
+    }
+    return [];
+  }
+
+  // Function to determine unanswered questions
+  Future<List<QuestionEntity>> fetchUnansweredQuestions(
+      {required String userId, required String seriesId}) async {
+    final allQuestions = await fetchAllQuestions(seriesId);
+    final answeredQuestions = await fetchAnsweredQuestions(userId, seriesId);
+
+    final answeredQuestionIds =
+        answeredQuestions.map((q) => q.questionId).toSet();
+    final unansweredQuestions = allQuestions
+        .where((q) => !answeredQuestionIds.contains(q.questionId))
+        .toList();
+
+    return unansweredQuestions;
+  }
+
+  Stream<UserStats> fetchUserStats({
     required String userId,
   }) {
-    return _db
-        .collection('userstats')
-        .where('userId', isEqualTo: userId)
-        .snapshots()
-        .map((querySnapshot) {
-      return querySnapshot.docs.map(UserStats.fromFirestore).toList();
+    return _db.collection('users').doc(userId).snapshots().map((snapshot) {
+      try {
+        if (snapshot.exists) {
+          return UserStats.fromFirestore(snapshot);
+        } else {
+          // Return an empty UserStats object if the document does not exist
+          return const UserStats.empty();
+        }
+      } catch (e) {
+        print('Error fetching user stats: $e');
+        // Optionally, return an empty UserStats object or handle the error as needed
+        return const UserStats.empty();
+      }
     });
   }
 
@@ -43,141 +91,73 @@ class AppDataSource {
     }
   }
 
-  Future<List<QuestionEntity>> fetchSeriesQuestions(String seriesId) async {
-    try {
-      final QuerySnapshot querySnapshot = await _db.collection(seriesId).get();
-      return querySnapshot.docs.map(QuestionEntity.fromFirestore).toList();
-    } catch (e) {
-      throw Exception('Failed to fetch Questions of $seriesId: $e');
-    }
-  }
-
   Future<void> saveAnsweredQuestion({
     required String userId,
     required String seriesId,
     required String questionId,
     required bool? isCorrect,
     required String userName,
+    required String avatarSeed,
   }) async {
     try {
-      // Check if the question exists before saving the answer
-      final questionDoc =
-          await _db.collection('questions').doc(questionId).get();
+      final userDoc = _db.collection('users').doc(userId);
+      final userSnapshot = await userDoc.get();
 
-      if (!questionDoc.exists) {
-        throw Exception('Question does not exist.');
-      }
-
-      // Proceed to save answer if the question exists
-      final answeredQuestionsData = {
-        'answeredQuestions': FieldValue.arrayUnion([questionId]),
+      final answerData = {
+        'questionId': questionId,
+        'status': isCorrect == true
+            ? 'correct'
+            : (isCorrect == false ? 'wrong' : 'no_choice')
       };
 
-      final userStatsDoc =
-          await _db.collection('userstats').doc('${userId}_$seriesId').get();
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data()!;
+        int correctNo = userData['correctNo'] ?? 0;
+        int wrongNo = userData['wrongNo'] ?? 0;
 
-      final userStatsData = userStatsDoc.exists
-          ? userStatsDoc.data()!
-          : {
-              'userId': userId,
-              'seriesId': seriesId,
-              'answeredQuestions': <String>[],
-              'correctNo': 0,
-              'wrongNo': 0,
-              'userName': userName,
-            };
-
-      userStatsData['answeredQuestions'].add(questionId);
-
-      if (isCorrect != null) {
-        if (isCorrect) {
-          userStatsData['correctNo'] += 1;
-        } else {
-          userStatsData['wrongNo'] += 1;
+        if (isCorrect == true) {
+          correctNo += 1;
+        } else if (isCorrect == false) {
+          wrongNo += 1;
         }
-      }
 
-      // Save updated answered questions to answeredquestions collection
-      await _db
-          .collection('answeredquestions')
-          .doc('${userId}_$seriesId')
-          .set(answeredQuestionsData, SetOptions(merge: true));
-
-      // Save updated user stats to userstats collection
-      await _db
-          .collection('userstats')
-          .doc('${userId}_$seriesId')
-          .set(userStatsData, SetOptions(merge: true));
-    } catch (e) {
-      throw Exception('Failed to save answer: $e');
-    }
-  }
-
-  Stream<List<UserTotalStats>> fetchAllUsersStats() {
-    return _db.collection('userstats').snapshots().map((querySnapshot) {
-      final userStats =
-          querySnapshot.docs.map(UserStats.fromFirestore).toList();
-      final result = <UserTotalStats>[];
-
-      final totals = <String, Map<String, dynamic>>{};
-
-      for (final stats in userStats) {
-        if (!totals.containsKey(stats.userId)) {
-          totals[stats.userId] = {
-            'userId': stats.userId,
-            'userName': stats.userName,
-            'correctNo': 0,
-            'wrongNo': 0,
-          };
-        }
-        totals[stats.userId]!['correctNo'] += stats.correctNo;
-        totals[stats.userId]!['wrongNo'] += stats.wrongNo;
-      }
-
-      for (final entry in totals.entries) {
-        result.add(UserTotalStats.fromMap(entry.value));
-      }
-
-      return result;
-    });
-  }
-
-  Future<Set<String>> fetchAnsweredQuestions(
-    String userId,
-    String seriesId,
-  ) async {
-    try {
-      final DocumentSnapshot doc = await _db
-          .collection('answeredquestions')
-          .doc('${userId}_$seriesId')
-          .get();
-
-      if (doc.exists && doc.data() != null) {
-        final data = doc.data()! as Map<String, dynamic>;
-        final answeredQuestions = data['answeredQuestions'] as List<dynamic>;
-        return answeredQuestions.map((e) => e.toString()).toSet();
+        await userDoc.update({
+          'correctNo': correctNo,
+          'wrongNo': wrongNo,
+          'answers.$seriesId': FieldValue.arrayUnion([answerData]),
+        });
       } else {
-        return <String>{}; // Empty set if no answered questions found
+        // If the user document does not exist, create it with the initial values
+        await userDoc.set({
+          'userId': userId,
+          'userName': userName,
+          'avatarSeed': avatarSeed,
+          'correctNo': isCorrect == true ? 1 : 0,
+          'wrongNo': isCorrect == false ? 1 : 0,
+          'answers': {
+            seriesId: [answerData],
+          },
+        });
       }
     } catch (e) {
-      throw Exception('Failed to fetch Answered Questions: $e');
+      print('Error updating user data: $e');
     }
   }
 
-  Future<List<QuestionEntity>> fetchUnansweredQuestions({
-    required String userId,
-    required String seriesId,
-  }) async {
-    try {
-      final allQuestions = await fetchSeriesQuestions(seriesId);
-      final answeredQuestions = await fetchAnsweredQuestions(userId, seriesId);
-
-      final unansweredQuestions = allQuestions
-          .where((question) => !answeredQuestions.contains(question.questionId))
-          .toList();
-      return unansweredQuestions;
-    } catch (e) {
-      throw Exception('Failed to fetch Unanswered Questions: $e');
-    }
+  Stream<List<UserStats>> fetchAllUsersStats() {
+    return _db.collection('users').snapshots().map((snapshot) {
+      try {
+        if (snapshot.docs.isNotEmpty) {
+          return snapshot.docs.map((doc) {
+            return UserStats.fromFirestore(doc);
+          }).toList();
+        } else {
+          return []; // Return an empty list if no documents exist
+        }
+      } catch (e) {
+        print('Error fetching all users stats: $e');
+        return []; // Optionally handle error by returning an empty list
+      }
+    });
   }
 }

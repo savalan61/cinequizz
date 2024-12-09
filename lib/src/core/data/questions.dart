@@ -594,9 +594,10 @@
 
 //   for (final series in seriesData) {
 //     await db.collection('series').doc(series.seriesId).set(series.toJson());
-//   }
+//   }import 'dart:math';
+import 'dart:math';
 
-import 'package:cinequizz/src/features/app/domain/entities/user_total_stats.dart';
+import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
 
 final realNames = [
   'Alice Johnson',
@@ -621,12 +622,22 @@ final realNames = [
   'Tina Turner'
 ];
 
-final dummyUsers = List<UserTotalStats>.generate(
+final random = Random(DateTime.now().millisecondsSinceEpoch);
+
+final dummyUsers = List<UserStats>.generate(
   20,
-  (index) => UserTotalStats(
-    userId: 'dummyUser${index + 1}',
-    userName: realNames[index],
-    correctNo: (index + 1) * 10,
-    wrongNo: index,
-  ),
+  (index) {
+    final correctNo =
+        (index + 1) * 10 + random.nextInt(20); // Randomly add 0 to 19
+    final wrongNo = index + random.nextInt(5); // Randomly add 0 to 4
+
+    return UserStats(
+      userId: 'dummyUser${index + 1}',
+      userName: realNames[index],
+      correctNo: correctNo,
+      wrongNo: wrongNo,
+      avatarSeed: realNames[index],
+      answeredQuestions: [], // Add default empty list for answeredQuestions
+    );
+  },
 );

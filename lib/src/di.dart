@@ -78,9 +78,7 @@ Future<void> init() async {
     );
 
     // Use cases can be factories as they don't hold state
-    sl.registerFactory<AllQuestionsUsecase>(
-      () => AllQuestionsUsecase(appRepoIf: sl<AppRepoIf>()),
-    );
+
     sl.registerFactory<FetchUserStatsUsecase>(
       () => FetchUserStatsUsecase(appRepoIf: sl<AppRepoIf>()),
     );

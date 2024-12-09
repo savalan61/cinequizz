@@ -75,7 +75,9 @@ class AppRouter {
                   GoRoute(
                     path: AppRoutes.home.route,
                     name: AppRoutes.home.name,
-                    builder: (context, state) => const HomePage(),
+                    builder: (context, state) {
+                      return const HomePage();
+                    },
                   ),
                 ],
               ),

@@ -12,14 +12,6 @@ class AppRepoImpl implements AppRepoIf {
       : _appDataSource = appDataSource;
 
   final AppDataSource _appDataSource;
-  @override
-  Future<Either<Failure, List<QuestionEntity>>> fetchAllQuestions() async {
-    try {
-      return right(await _appDataSource.fetchAllQuestions());
-    } catch (e) {
-      return left(Failure('Failed to fetch Questions: $e'));
-    }
-  }
 
   @override
   Future<Either<Failure, List<SeriesEntity>>> fetchAllSeries() async {
@@ -54,6 +46,7 @@ class AppRepoImpl implements AppRepoIf {
     required String questionId,
     required bool? isCorrect,
     required String userName,
+    required String avatarSeed,
   }) async {
     try {
       return right(
@@ -63,6 +56,7 @@ class AppRepoImpl implements AppRepoIf {
           questionId: questionId,
           isCorrect: isCorrect,
           userName: userName,
+          avatarSeed: avatarSeed,
         ),
       );
     } catch (e) {
@@ -71,7 +65,7 @@ class AppRepoImpl implements AppRepoIf {
   }
 
   @override
-  Stream<List<UserStats>> fetchUserStats({
+  Stream<UserStats> fetchUserStats({
     required String userId,
   }) {
     return _appDataSource.fetchUserStats(
@@ -80,7 +74,7 @@ class AppRepoImpl implements AppRepoIf {
   }
 
   @override
-  Stream<List<UserTotalStats>> fetchAllUsersStats() {
+  Stream<List<UserStats>> fetchAllUsersStats() {
     return _appDataSource.fetchAllUsersStats();
   }
 }

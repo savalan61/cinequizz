@@ -43,7 +43,7 @@ class BottomNavBar extends StatelessWidget {
           .map(
             (item) => BottomNavigationBarItem(
               icon: item.child ?? Icon(item.icon, size: 20),
-              label: item.label,
+              label: '',
               tooltip: item.tooltip,
             ),
           )

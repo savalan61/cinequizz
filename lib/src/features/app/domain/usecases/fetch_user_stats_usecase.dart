@@ -6,7 +6,7 @@ class FetchUserStatsUsecase {
       : _appRepoIf = appRepoIf;
 
   final AppRepoIf _appRepoIf;
-  Stream<List<UserStats>> call(String userId) {
+  Stream<UserStats> call(String userId) {
     return _appRepoIf.fetchUserStats(
       userId: userId,
     );

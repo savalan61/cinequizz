@@ -20,15 +20,6 @@ final class AppUserChanged extends AppEvent {
   List<Object> get props => [user];
 }
 
-// final class AppUpdateAccountRequested extends AppEvent {
-//   const AppUpdateAccountRequested({this.username});
-
-//   final String? username;
-
-//   @override
-//   List<Object?> get props => [username];
-// }
-
 final class AppUpdateProfileRequested extends AppEvent {
   const AppUpdateProfileRequested(
     this.userName, {

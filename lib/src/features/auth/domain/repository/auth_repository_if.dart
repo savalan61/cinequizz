@@ -10,7 +10,7 @@ abstract class AuthRepositoryIf {
     required String username,
     required String email,
     required String password,
-    String? photo,
+    required String avatarSeed,
   });
 
   Future<Either<Failure, void>> loginWithPassword({

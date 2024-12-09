@@ -69,14 +69,14 @@ class AuthRepoImpl implements AuthRepositoryIf {
     required String username,
     required String email,
     required String password,
-    String? photo,
+    required String avatarSeed,
   }) async {
     try {
       await _authDatasource.signUpWithPassword(
-        username: username,
-        email: email,
-        password: password,
-      );
+          username: username,
+          email: email,
+          password: password,
+          avatarSeed: avatarSeed);
     } on SignUpWithPasswordCanceled {
       rethrow;
     } on SignUpWithPasswordFailure {

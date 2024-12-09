@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
-import 'package:cinequizz/src/di.dart';
-import 'package:cinequizz/src/features/auth/presentation/sign_up/cubit/sign_up_cubit.dart';
 import 'package:cinequizz/src/features/auth/presentation/sign_up/widgets/_widgets.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -31,7 +28,7 @@ class SignUpView extends StatelessWidget {
         child: Column(
           children: [
             WelcomeImage(),
-            SizedBox(height: AppSpacing.lg),
+            SizedBox(height: AppSpacing.xxlg),
             SignUpForm(),
             Spacer(),
             SignUpFooter(),

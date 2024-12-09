@@ -20,7 +20,7 @@ class SeriesState {
   SeriesState.initial({
     this.series = const [],
     this.status = SeriesStatus.idl,
-    this.userStats = const [],
+    this.userStats = const UserStats.empty(),
     this.totalScore = 0,
     this.filteredSeries = const [],
     this.totalStats = const [],
@@ -29,15 +29,15 @@ class SeriesState {
   SeriesState copyWith({
     SeriesStatus? status,
     List<SeriesEntity>? series,
-    List<UserStats>? userStats,
+    UserStats? currentUserStats,
     int? totalScore,
     List<SeriesEntity>? filteredSeries,
-    List<UserTotalStats>? totalStats,
+    List<UserStats>? totalStats,
   }) {
     return SeriesState(
         status: status ?? this.status,
         series: series ?? this.series,
-        userStats: userStats ?? this.userStats,
+        userStats: currentUserStats ?? this.userStats,
         totalScore: totalScore ?? this.totalScore,
         filteredSeries: filteredSeries ?? this.filteredSeries,
         totalStats: totalStats ?? this.totalStats);
@@ -45,8 +45,8 @@ class SeriesState {
 
   final SeriesStatus status;
   final List<SeriesEntity> series;
-  final List<UserStats> userStats;
+  final UserStats userStats;
   final int totalScore;
   final List<SeriesEntity> filteredSeries;
-  final List<UserTotalStats> totalStats;
+  final List<UserStats> totalStats;
 }
