@@ -14,7 +14,11 @@ class AppDataSource {
 
 // Function to fetch all questions for a given series
   Future<List<QuestionEntity>> fetchAllQuestions(String seriesId) async {
-    final seriesDoc = await _db.collection(seriesId).get();
+    final seriesDoc = await _db
+        .collection('series_questions')
+        .doc(seriesId)
+        .collection('questions')
+        .get();
     if (seriesDoc.docs.isNotEmpty) {
       return seriesDoc.docs
           .map((doc) => QuestionEntity.fromFirestore(doc))

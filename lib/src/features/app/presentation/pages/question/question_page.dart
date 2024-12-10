@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
-import 'package:cinequizz/src/core/routes/app_router.dart';
 import 'package:cinequizz/src/features/app/domain/entities/answered_questions.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';

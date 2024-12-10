@@ -1,10 +1,9 @@
 import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 final breakingBadSeason_1 = [
   const QuestionEntity(
     questionId: 'q1',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title:
         'What does Walter White do for a living at the start of Breaking Bad?',
@@ -13,7 +12,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q2',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who is Walter\'s partner in the meth business?',
     opts: ['Saul Goodman', 'Gus Fring', 'Hank Schrader', 'Jesse Pinkman'],
@@ -21,7 +20,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q3',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What nickname does Walter White go by in the drug world?',
     opts: ['Heisenberg', 'Eisenhower', 'Hindenburg', 'Hemingway'],
@@ -29,7 +28,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q4',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who is Walter White\'s brother-in-law?',
     opts: ['Gus Fring', 'Hank Schrader', 'Mike Ehrmantraut', 'Tuco Salamanca'],
@@ -37,7 +36,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q5',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What type of cancer is Walter White diagnosed with?',
     opts: [
@@ -50,7 +49,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q6',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What is the name of the car wash where Walter works part-time?',
     opts: ['Sparkle Car Wash', 'Quick Clean', 'A1A Car Wash', 'Scrub Hub'],
@@ -58,7 +57,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q7',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who is the first major drug dealer Walter and Jesse confront?',
     opts: ['Tuco Salamanca', 'Krazy-8', 'Gus Fring', 'Jack Welker'],
@@ -66,7 +65,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q8',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does the blue color of Walter\'s meth signify?',
     opts: ['Higher Purity', 'Lower Purity', 'Flavored Meth', 'Tainted Meth'],
@@ -74,7 +73,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q9',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What kind of car does Walter drive in the beginning?',
     opts: ['Toyota Prius', 'Pontiac Aztek', 'Honda Civic', 'Ford Taurus'],
@@ -82,7 +81,7 @@ final breakingBadSeason_1 = [
   ),
   const QuestionEntity(
     questionId: 'q10',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What is the name of Jesse\'s girlfriend in Season 1?',
     opts: ['Skyler', 'Jane', 'Andrea', 'Kristen'],
@@ -93,7 +92,7 @@ final breakingBadSeason_1 = [
 final breakingBadSeason_2 = [
   const QuestionEntity(
     questionId: 'q11',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who introduces Walter to Tuco Salamanca?',
     opts: ['Saul Goodman', 'Jesse Pinkman', 'Krazy-8', 'Hank Schrader'],
@@ -101,7 +100,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q12',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Where does Tuco take Walter and Jesse in Season 2?',
     opts: ['His House', 'A Desert Hideout', 'The Car Wash', 'A Warehouse'],
@@ -109,7 +108,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q13',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What is the name of Jane Margolis\'s father?',
     opts: ['Donald', 'David', 'Daniel', 'Dennis'],
@@ -117,7 +116,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q14',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title:
         'What color does Walter change his meth to in order to differentiate it?',
@@ -126,7 +125,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q15',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who does Skyler think is laundering money through the car wash?',
     opts: ['Walter', 'Bogdan', 'Marie', 'Hank'],
@@ -134,7 +133,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q16',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What is the name of Saul Goodman\'s bodyguard?',
     opts: ['Huell', 'Kuby', 'Mike', 'Tyrus'],
@@ -142,7 +141,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q17',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What job does Jane have in Season 2?',
     opts: ['Artist', 'Waitress', 'Tattoo Artist', 'Realtor'],
@@ -150,7 +149,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q18',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does the pink teddy bear symbolize in Season 2?',
     opts: ['Childhood', 'Tragedy', 'Crime', 'Innocence'],
@@ -158,7 +157,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q19',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does Jane die from in Season 2?',
     opts: ['Drug Overdose', 'Car Accident', 'Gunshot Wound', 'Natural Causes'],
@@ -166,7 +165,7 @@ final breakingBadSeason_2 = [
   ),
   const QuestionEntity(
     questionId: 'q20',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who discovers that Walter is Heisenberg in Season 2?',
     opts: ['Skyler', 'Jesse', 'Hank', 'Marie'],
@@ -176,7 +175,7 @@ final breakingBadSeason_2 = [
 final breakingBadSeason_3 = [
   const QuestionEntity(
     questionId: 'q21',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who is introduced as a major antagonist in Season 3?',
     opts: [
@@ -189,7 +188,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q22',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What business does Gus Fring use as a front?',
     opts: [
@@ -202,7 +201,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q23',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who is Gale Boetticher?',
     opts: ['A DEA Agent', 'A Drug Dealer', 'A Chemist', 'A Lawyer'],
@@ -210,7 +209,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q24',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does Hank start to suspect in Season 3?',
     opts: [
@@ -223,7 +222,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q25',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What is the name of Gus\'s fast food chain?',
     opts: ['Pollos Hermanos', 'Taco Bell', 'KFC', 'Burger King'],
@@ -231,7 +230,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q26',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who does Walter kill at the end of Season 3?',
     opts: ['Gus', 'Hank', 'Jesse', 'Gale'],
@@ -239,7 +238,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q27',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who becomes suspicious of Walter\'s new wealth?',
     opts: ['Marie', 'Hank', 'Skyler', 'Jesse'],
@@ -247,7 +246,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q28',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does Walter buy his son for his 16th birthday?',
     opts: ['A bicycle', 'A laptop', 'A car', 'A watch'],
@@ -255,7 +254,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q29',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What type of transportation does Walter use to kill two dealers?',
     opts: ['Car', 'Motorcycle', 'Truck', 'Bike'],
@@ -263,7 +262,7 @@ final breakingBadSeason_3 = [
   ),
   const QuestionEntity(
     questionId: 'q30',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who does Gus suspect of poisoning the cartel\'s tequila?',
     opts: ['Jesse', 'Mike', 'Gale', 'Walter'],
@@ -273,7 +272,7 @@ final breakingBadSeason_3 = [
 final breakingBadSeason_4 = [
   const QuestionEntity(
     questionId: 'q31',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What new lab assistant does Gustavo Fring hire in Season 4?',
     opts: ['Gale Boetticher', 'Todd Alquist', 'Victor', 'Jesse Pinkman'],
@@ -281,7 +280,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q32',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What method does Gus use to kill Don Eladio and his men?',
     opts: ['Shooting', 'Poisoned Tequila', 'Car Bomb', 'Strangling'],
@@ -289,7 +288,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q33',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does Skyler do to help launder Walt\'s drug money?',
     opts: [
@@ -302,7 +301,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q34',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What vehicle does Hector Salamanca use to kill Gus Fring?',
     opts: ['A van', 'A wheelchair', 'A truck', 'A bicycle'],
@@ -310,7 +309,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q35',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does Walt use to rig the explosive device on the wheelchair?',
     opts: ['A bomb', 'A gun', 'A grenade', 'A bell'],
@@ -318,7 +317,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q36',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who is tasked with killing Walter by Gus but ultimately fails?',
     opts: ['Mike Ehrmantraut', 'Tyrus Kitt', 'Hector Salamanca', 'Victor'],
@@ -326,7 +325,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q37',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What game does Walt Jr. play with Hank in Season 4?',
     opts: ['Poker', 'Blackjack', 'Monopoly', 'Go-Kart racing'],
@@ -334,7 +333,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q38',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What is the main ingredient that Walter uses for his blue meth?',
     opts: ['Phenylacetone', 'Methylamine', 'Pseudoephedrine', 'Red phosphorus'],
@@ -342,7 +341,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q39',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who kills Gale Boetticher at the beginning of Season 4?',
     opts: [
@@ -355,7 +354,7 @@ final breakingBadSeason_4 = [
   ),
   const QuestionEntity(
     questionId: 'q40',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What plant does Walt use to poison Brock?',
     opts: ['Lily of the Valley', 'Oleander', 'Aconite', 'Belladonna'],
@@ -365,7 +364,7 @@ final breakingBadSeason_4 = [
 final breakingBadSeason_5 = [
   const QuestionEntity(
     questionId: 'q41',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who kills Gustavo Fring?',
     opts: [
@@ -378,7 +377,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q42',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What alias does Lydia Rodarte-Quayle go by when she contacts Walt?',
     opts: ['Sky Blue', 'Crystal Blue', 'White Rose', 'Snow White'],
@@ -386,7 +385,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q43',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What does Walter use to dissolve bodies?',
     opts: [
@@ -399,7 +398,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q44',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who takes over Gus Fring\'s meth operation?',
     opts: ['Walter White', 'Jesse Pinkman', 'Declan', 'Todd Alquist'],
@@ -407,7 +406,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q45',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What is the name of Walter\'s ricin-laced cigarette plan?',
     opts: [
@@ -420,7 +419,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q46',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who shoots and kills Hank Schrader?',
     opts: ['Todd Alquist', 'Jack Welker', 'Walter White', 'Jesse Pinkman'],
@@ -428,7 +427,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q47',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Where does Walter hide the barrels of money?',
     opts: [
@@ -441,7 +440,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q48',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What pseudonym does Saul Goodman use in his new life?',
     opts: [
@@ -454,7 +453,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q49',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'What type of business does Walt Jr. start?',
     opts: [
@@ -467,7 +466,7 @@ final breakingBadSeason_5 = [
   ),
   const QuestionEntity(
     questionId: 'q50',
-    seriesId: 's01',
+    seriesId: 's1',
     seriesName: 'Breaking Bad',
     title: 'Who survives to the end of the series?',
     opts: ['Walter White', 'Skyler White', 'Jesse Pinkman', 'Gustavo Fring'],
@@ -482,3 +481,5 @@ final allBreakingBadSeasons = [
   breakingBadSeason_4,
   breakingBadSeason_5,
 ];
+
+/// Total 50 question

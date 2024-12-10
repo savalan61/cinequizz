@@ -1,16 +1,15 @@
-import 'package:cinequizz/src/core/data/questions/saveFunction.dart';
-import 'package:cinequizz/src/core/extensions/tappable_extension.dart';
+import 'package:cinequizz/src/core/extensions/_extensions.dart';
+import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
+import 'package:cinequizz/src/core/theme/app_constants.dart';
 import 'package:cinequizz/src/core/theme/app_spacing.dart';
 import 'package:cinequizz/src/features/app/domain/entities/answered_questions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_dialogs/material_dialogs.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:cinequizz/src/core/connection_management/connectivity_cubit.dart';
 import 'package:cinequizz/src/core/routes/app_routes.dart';
-import 'package:cinequizz/src/core/shared/widgets/app_scaffold.dart';
 import 'package:cinequizz/src/core/theme/app_colors.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/domain/entities/series_entity.dart';
@@ -98,7 +97,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Tappable(
               onTap: () {
-                saveAllQuestions();
+                // saveAllQuestions();
               },
               child: RandomAvatar('${user.avatarSeed}', width: 50)),
           const SizedBox(width: AppSpacing.md),
@@ -162,31 +161,129 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSeriesCardTap(BuildContext context, SeriesEntity series) {
-    Dialogs.materialDialog(
-      msg: "Are you sure? You can't undo this",
-      title: series.name,
-      color: AppColors.background,
-      context: context,
-      actionsBuilder: (BuildContext context) => [
-        ShadButton.outline(
-          backgroundColor: Colors.transparent,
-          pressedBackgroundColor: Colors.transparent,
-          onPressed: () => context.pop(),
-          child: const Text('Cancel', style: TextStyle(color: AppColors.white)),
-        ),
-        ShadButton(
-          pressedBackgroundColor: Colors.transparent,
-          onPressed: () {
-            context
-              ..pushNamed(
-                AppRoutes.question.name,
-                pathParameters: {'series_id': series.seriesId},
+    // Dialogs.materialDialog(
+    //   msg: "Are you sure? You can't undo this",
+    //   title: series.name,
+    //   color: AppColors.background,
+    //   context: context,
+    //   actionsBuilder: (BuildContext context) => [
+    //     ShadButton.outline(
+    //       backgroundColor: Colors.transparent,
+    //       pressedBackgroundColor: Colors.transparent,
+    //       onPressed: () => context.pop(),
+    //       child: const Text('Cancel', style: TextStyle(color: AppColors.white)),
+    //     ),
+    //     ShadButton(
+    //       pressedBackgroundColor: Colors.transparent,
+    //       onPressed: () {
+    //         context
+    //           ..pushNamed(
+    //             AppRoutes.question.name,
+    //             pathParameters: {'series_id': series.seriesId},
+    //           )
+    //           ..pop();
+    //       },
+    //       child: const Text('Start'),
+    //     ),
+    //   ],
+    // );
+    context.showScrollableModal(
+      pageBuilder: (ScrollController scrollController,
+          DraggableScrollableController draggableScrollController) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text(
+                'Basic Rules',
+                style: context.bodyLarge!,
+              ),
+              ListTile(
+                leading: const Icon(
+                  LucideIcons.circleAlert,
+                  // color: AppColors.red,
+                ),
+                title: Text(
+                  'Only one of the four answers is correct',
+                  style: context.bodyMedium,
+                ),
+              ),
+              ListTile(
+                  leading: const Icon(
+                    LucideIcons.circleAlert,
+                    // color: AppColors.red,
+                  ),
+                  title: RichText(
+                      text: TextSpan(style: context.bodyMedium, children: [
+                    const TextSpan(text: 'Each question has a time limit of '),
+                    TextSpan(
+                        text: '${AppConstants.questionTimeLimit}',
+                        style:
+                            context.bodyMedium!.copyWith(color: AppColors.red)),
+                    const TextSpan(text: ' seconds.'),
+                  ]))),
+              ListTile(
+                leading: const Icon(
+                  LucideIcons.circleAlert,
+                  // color: AppColors.red,
+                ),
+                title: RichText(
+                  text: TextSpan(
+                    style: context.bodyMedium,
+                    children: const [
+                      TextSpan(
+                        text: 'Correct answers earn ',
+                      ),
+                      TextSpan(
+                        text: '${AppConstants.correctAnsScore}',
+                        style: TextStyle(color: Colors.green),
+                      ),
+                      TextSpan(
+                        text: ' points, incorrect answers deduct ',
+                      ),
+                      TextSpan(
+                        text: '${AppConstants.wrongAnsScore}',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      TextSpan(
+                        text:
+                            ' points, and unanswered questions score 0 points.',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: AppSpacing.xlg,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ShadButton.outline(
+                    backgroundColor: Colors.transparent,
+                    pressedBackgroundColor: Colors.transparent,
+                    onPressed: () => context.pop(),
+                    child: const Text('Cancel',
+                        style: TextStyle(color: AppColors.white)),
+                  ),
+                  ShadButton(
+                    pressedBackgroundColor: Colors.transparent,
+                    onPressed: () {
+                      context
+                        ..pushNamed(
+                          AppRoutes.question.name,
+                          pathParameters: {'series_id': series.seriesId},
+                        )
+                        ..pop();
+                    },
+                    child: const Text('Start'),
+                  ),
+                ],
               )
-              ..pop();
-          },
-          child: const Text('Start'),
-        ),
-      ],
+            ],
+          ),
+        );
+      },
     );
   }
 }

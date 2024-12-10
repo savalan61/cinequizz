@@ -74,33 +74,35 @@ class _SignUpFormState extends State<SignUpForm> {
               // Avatar Selection
               Tappable.scaled(
                 onTap: () {
-                  context.showScrollableModal(pageBuilder: (ScrollController
-                          scrollController,
-                      DraggableScrollableController draggableScrollController) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GridView.builder(
-                        itemCount: avatarSeeds.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisSpacing: 4.0,
-                                mainAxisSpacing: 4.0,
-                                crossAxisCount: 7),
-                        itemBuilder: (context, index) {
-                          return Tappable.scaled(
-                            onTap: () {
-                              context
-                                  .read<SignUpCubit>()
-                                  .onSelectAvatar(avatarSeeds[index]);
-                              context.pop();
-                            },
-                            child: RandomAvatar(avatarSeeds[index],
-                                height: 70, width: 70),
-                          );
-                        },
-                      ),
-                    );
-                  });
+                  context.showScrollableModal(
+                    pageBuilder: (ScrollController scrollController,
+                        DraggableScrollableController
+                            draggableScrollController) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GridView.builder(
+                          itemCount: avatarSeeds.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 4.0,
+                                  mainAxisSpacing: 4.0,
+                                  crossAxisCount: 7),
+                          itemBuilder: (context, index) {
+                            return Tappable.scaled(
+                              onTap: () {
+                                context
+                                    .read<SignUpCubit>()
+                                    .onSelectAvatar(avatarSeeds[index]);
+                                context.pop();
+                              },
+                              child: RandomAvatar(avatarSeeds[index],
+                                  height: 70, width: 70),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
                 },
                 child: Align(
                   alignment: Alignment.center,

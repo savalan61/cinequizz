@@ -1,11 +1,11 @@
 // ignore_for_file: cascade_invocations
 
 import 'package:cinequizz/src/core/data/dummy_users.dart';
+import 'package:cinequizz/src/core/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:cinequizz/src/core/data/questions.dart';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
@@ -42,8 +42,10 @@ class _LeaderboardState extends State<Leaderboard> {
           } else {
             final userTotalStats = [...state.totalStats, ...dummyUsers];
             userTotalStats.sort((a, b) {
-              final aScore = a.correctNo * 1000 - a.wrongNo * 250;
-              final bScore = b.correctNo * 1000 - b.wrongNo * 250;
+              final aScore = a.correctNo * AppConstants.correctAnsScore -
+                  a.wrongNo * AppConstants.wrongAnsScore;
+              final bScore = b.correctNo * AppConstants.correctAnsScore -
+                  b.wrongNo * AppConstants.wrongAnsScore;
               return bScore.compareTo(aScore);
             });
 
@@ -54,7 +56,8 @@ class _LeaderboardState extends State<Leaderboard> {
                 itemBuilder: (context, index) {
                   final userStats = userTotalStats[index];
                   final totalScore =
-                      userStats.correctNo * 1000 - userStats.wrongNo * 250;
+                      userStats.correctNo * AppConstants.correctAnsScore -
+                          userStats.wrongNo * AppConstants.wrongAnsScore;
                   final userName = userStats.userName;
                   final isMe = currentUserStats.userId == userStats.userId;
                   return Card(

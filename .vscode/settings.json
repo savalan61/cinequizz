@@ -1,7 +1,7 @@
 {
   
   "cSpell.ignorePaths": [
-    "lib/src/core/data/questions.dart",
+    "lib/src/core/data/",
   ],
   "cSpell.language": "en",
 "cSpell.enabled": true,
