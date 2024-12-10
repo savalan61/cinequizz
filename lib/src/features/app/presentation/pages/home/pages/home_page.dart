@@ -1,3 +1,4 @@
+import 'package:cinequizz/src/core/data/questions/saveFunction.dart';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
 import 'package:cinequizz/src/core/theme/app_constants.dart';
@@ -32,6 +33,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _loadData();
+  }
+
+  void _loadData() {
     final appBloc = sl<AppBloc>();
     final seriesCubit = sl<SeriesCubit>();
 
@@ -48,9 +53,9 @@ class _HomePageState extends State<HomePage> {
         BlocListener<AppBloc, AppState>(
           listener: (context, state) {
             if (state is Authenticated) {
-              setState(() {
-                user = state.user;
-              });
+              // setState(() {
+              user = state.user;
+              // });
             }
           },
         ),
@@ -67,18 +72,24 @@ class _HomePageState extends State<HomePage> {
                 appBar: _buildAppBar(seriesState),
                 body: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: ListView.builder(
-                    itemCount: seriesState.series.length,
-                    itemBuilder: (context, index) => _buildSeriesCard(
-                      context,
-                      seriesState.series[index],
-                      seriesState.currentUserStats.answeredQuestions.firstWhere(
-                        (element) =>
-                            element.seriesId ==
-                            seriesState.series[index].seriesId,
-                        orElse: () => AnsweredQuestions.empty(),
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      _loadData(); // Reload the data when pull-to-refresh happens
+                    },
+                    child: ListView.builder(
+                      itemCount: seriesState.series.length,
+                      itemBuilder: (context, index) => _buildSeriesCard(
+                        context,
+                        seriesState.series[index],
+                        seriesState.currentUserStats.answeredQuestions
+                            .firstWhere(
+                          (element) =>
+                              element.seriesId ==
+                              seriesState.series[index].seriesId,
+                          orElse: () => AnsweredQuestions.empty(),
+                        ),
+                        index,
                       ),
-                      index,
                     ),
                   ),
                 ),
@@ -97,7 +108,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Tappable(
               onTap: () {
-                // saveAllQuestions();
+                run();
               },
               child: RandomAvatar('${user.avatarSeed}', width: 50)),
           const SizedBox(width: AppSpacing.md),
@@ -106,7 +117,6 @@ class _HomePageState extends State<HomePage> {
           AnimatedFlipCounter(
             duration: 4.seconds,
             value: seriesState.totalScore,
-            // prefix: "Score ",
             textStyle: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -143,16 +153,17 @@ class _HomePageState extends State<HomePage> {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: SeriesCard(
-        onTap: () => userStats.questions.length / series.questionNo != 1
+        onTap: () => userStats.questions.length / series.totalQuestionNo != 1
             ? _onSeriesCardTap(context, series)
             : null,
         imageUrl: series.imgUrl,
         title: series.name,
         trailing: series.info,
         rating: double.parse(series.rating),
-        completedRatio: userStats.questions.length / series.questionNo,
+        completedRatio: userStats.questions.length / series.totalQuestionNo,
         correctNo: userStats.correctCount,
         wrongNo: userStats.wrongCount,
+        totalQuestionNo: series.totalQuestionNo,
       ).animate().fadeIn(
             duration: const Duration(milliseconds: 500),
             delay: Duration(milliseconds: 500 * index),
@@ -161,32 +172,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSeriesCardTap(BuildContext context, SeriesEntity series) {
-    // Dialogs.materialDialog(
-    //   msg: "Are you sure? You can't undo this",
-    //   title: series.name,
-    //   color: AppColors.background,
-    //   context: context,
-    //   actionsBuilder: (BuildContext context) => [
-    //     ShadButton.outline(
-    //       backgroundColor: Colors.transparent,
-    //       pressedBackgroundColor: Colors.transparent,
-    //       onPressed: () => context.pop(),
-    //       child: const Text('Cancel', style: TextStyle(color: AppColors.white)),
-    //     ),
-    //     ShadButton(
-    //       pressedBackgroundColor: Colors.transparent,
-    //       onPressed: () {
-    //         context
-    //           ..pushNamed(
-    //             AppRoutes.question.name,
-    //             pathParameters: {'series_id': series.seriesId},
-    //           )
-    //           ..pop();
-    //       },
-    //       child: const Text('Start'),
-    //     ),
-    //   ],
-    // );
     context.showScrollableModal(
       pageBuilder: (ScrollController scrollController,
           DraggableScrollableController draggableScrollController) {
@@ -201,7 +186,6 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: const Icon(
                   LucideIcons.circleAlert,
-                  // color: AppColors.red,
                 ),
                 title: Text(
                   'Only one of the four answers is correct',
@@ -211,7 +195,6 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                   leading: const Icon(
                     LucideIcons.circleAlert,
-                    // color: AppColors.red,
                   ),
                   title: RichText(
                       text: TextSpan(style: context.bodyMedium, children: [
@@ -225,7 +208,6 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: const Icon(
                   LucideIcons.circleAlert,
-                  // color: AppColors.red,
                 ),
                 title: RichText(
                   text: TextSpan(

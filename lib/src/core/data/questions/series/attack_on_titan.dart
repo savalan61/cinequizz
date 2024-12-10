@@ -1,0 +1,397 @@
+import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
+
+final attackOnTitan = [
+  const QuestionEntity(
+    questionId: 'q1',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who is the protagonist of the story?',
+    opts: ['Armin Arlert', 'Mikasa Ackerman', 'Levi Ackerman', 'Eren Yeager'],
+    answerNo: 4,
+  ),
+  const QuestionEntity(
+    questionId: 'q2',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the name of the city where the story begins?',
+    opts: ['Trost District', 'Wall Rose', 'Wall Maria', 'Shiganshina District'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q3',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Which Titan is known as the Armored Titan?',
+    opts: ['Annie Leonhart', 'Reiner Braun', 'Bertolt Hoover', 'Eren Yeager'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q4',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the primary weapon used by the soldiers to fight Titans?',
+    opts: ['Swords', 'Guns', 'Bombs', 'Bows and Arrows'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q5',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who is the first person to die in the anime?',
+    opts: ['Hange Zoë', 'Marco Bott', 'Jean Kirstein', 'Eren Yeager'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q6',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the name of the first Titan Eren transforms into?',
+    opts: ['Colossal Titan', 'Armored Titan', 'Attack Titan', 'Female Titan'],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q7',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who is the leader of the Scout Regiment?',
+    opts: ['Hange Zoë', 'Levi Ackerman', 'Erwin Smith', 'Mikasa Ackerman'],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q8',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the main reason why humanity builds walls?',
+    opts: [
+      'To protect themselves from Titans',
+      'For aesthetic purposes',
+      'To control the population',
+      'To create a government'
+    ],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q9',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What ability does the Female Titan have?',
+    opts: [
+      'Can control Titans',
+      'Regeneration',
+      'Shapeshifting',
+      'Has the ability to transform other humans into Titans'
+    ],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q10',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'Which character is known for their use of the vertical maneuvering equipment?',
+    opts: ['Levi Ackerman', 'Eren Yeager', 'Mikasa Ackerman', 'Jean Kirstein'],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q11',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the name of the Titan that appears in Wall Rose?',
+    opts: [
+      'Beast Titan',
+      'Armored Titan',
+      'Colossal Titan',
+      'The Smiling Titan'
+    ],
+    answerNo: 4,
+  ),
+  const QuestionEntity(
+    questionId: 'q12',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who is revealed to be the Armored Titan?',
+    opts: ['Bertolt Hoover', 'Reiner Braun', 'Annie Leonhart', 'Ymir'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q13',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Which Titan shifter is revealed to be in the Survey Corps?',
+    opts: ['Reiner Braun', 'Bertolt Hoover', 'Ymir', 'Eren Yeager'],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q14',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the true identity of the Beast Titan?',
+    opts: ['Zeke Yeager', 'Reiner Braun', 'Erwin Smith', 'Hange Zoë'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q15',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the name of the soldier who gets eaten by the Beast Titan?',
+    opts: ['Marco Bott', 'Connie Springer', 'Sasha Blouse', 'Erwin Smith'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q16',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Which character possesses the power of the Female Titan?',
+    opts: ['Annie Leonhart', 'Mikasa Ackerman', 'Ymir', 'Hange Zoë'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q17',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What happens to the Titan shifters when they are killed?',
+    opts: [
+      'They become normal humans',
+      'They regenerate',
+      'Their power is passed to someone else',
+      'They disappear into thin air'
+    ],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q18',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'Which Titan is known to possess the ability to control other Titans?',
+    opts: ['Beast Titan', 'Female Titan', 'Attack Titan', 'Colossal Titan'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q19',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'What is the name of the titan that Reiner and Bertolt have been hiding?',
+    opts: [
+      'The Armored Titan',
+      'The Beast Titan',
+      'The Colossal Titan',
+      'The Jaw Titan'
+    ],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q20',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'Which Titan is known for being able to control other Titans using its scream?',
+    opts: ['Founding Titan', 'Beast Titan', 'Armored Titan', 'Colossal Titan'],
+    answerNo: 0,
+  ),
+  const QuestionEntity(
+    questionId: 'q21',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who is the leader of the Scout Regiment at the start of Season 3?',
+    opts: ['Erwin Smith', 'Levi Ackerman', 'Mikasa Ackerman', 'Jean Kirstein'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q22',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'What is the name of the group that tries to overthrow the monarchy?',
+    opts: [
+      'The Reiss Family',
+      'The Anti-Marleyan Revolutionary Army',
+      'The King\'s Guard',
+      'The Marlean Warriors'
+    ],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q23',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who is revealed to be the true ruler of the walls?',
+    opts: ['Reiner Braun', 'Historia Reiss', 'Kenny Ackerman', 'Levi Ackerman'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q24',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the name of the Titan that takes down Wall Maria?',
+    opts: ['Beast Titan', 'Colossal Titan', 'Armored Titan', 'Female Titan'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q25',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Which character is revealed to have royal blood?',
+    opts: [
+      'Mikasa Ackerman',
+      'Jean Kirstein',
+      'Historia Reiss',
+      'Annie Leonhart'
+    ],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q26',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the goal of the Marleyan government?',
+    opts: [
+      'To protect the Eldians',
+      'To capture the Attack Titan',
+      'To annihilate the Eldians',
+      'To control the Walls'
+    ],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q27',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the name of the Titan power that Historia inherits?',
+    opts: [
+      'The Founding Titan',
+      'The Attack Titan',
+      'The Female Titan',
+      'The Armored Titan'
+    ],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q28',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who kills Erwin Smith?',
+    opts: ['Levi Ackerman', 'Kenny Ackerman', 'Zeke Yeager', 'Armin Arlert'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q29',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Which Titan shifter is known for his power to manipulate memories?',
+    opts: ['Eren Yeager', 'Historia Reiss', 'Zeke Yeager', 'Kenny Ackerman'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q30',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'Who is the first person to inherit the Attack Titan in the Attack on Titan series?',
+    opts: ['Eren Yeager', 'Grisha Yeager', 'Zeke Yeager', 'Marleyan Warrior'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q31',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who becomes the new leader of the Eldian people in Season 4?',
+    opts: ['Eren Yeager', 'Armin Arlert', 'Mikasa Ackerman', 'Historia Reiss'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q32',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the name of the island where the Eldians are living?',
+    opts: [
+      'Paradise Island',
+      'Marelli Island',
+      'Liberio Island',
+      'Shiganshina Island'
+    ],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q33',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Which Titan power does Eren gain in Season 4?',
+    opts: ['Founding Titan', 'Attack Titan', 'War Hammer Titan', 'Beast Titan'],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q34',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who is the leader of the Marleyan military?',
+    opts: ['Zeke Yeager', 'Reiner Braun', 'Commander Magath', 'Pieck Finger'],
+    answerNo: 3,
+  ),
+  const QuestionEntity(
+    questionId: 'q35',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the primary reason for the war between Marley and Eldia?',
+    opts: [
+      'Power over the Founding Titan',
+      'Revenge for Wall Maria',
+      'Resource control',
+      'Racial prejudice'
+    ],
+    answerNo: 4,
+  ),
+  const QuestionEntity(
+    questionId: 'q36',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'What is the name of the Titan shifter who controls the War Hammer Titan?',
+    opts: ['Eren Yeager', 'Lara Tybur', 'Reiner Braun', 'Pieck Finger'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q37',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Who does Eren form an alliance with during Season 4?',
+    opts: ['Reiner Braun', 'Zeke Yeager', 'Pieck Finger', 'Gabi Braun'],
+    answerNo: 2,
+  ),
+  const QuestionEntity(
+    questionId: 'q38',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'Which character is sent to Marley to infiltrate the Warrior Unit?',
+    opts: [
+      'Armin Arlert',
+      'Mikasa Ackerman',
+      'Connie Springer',
+      'Sasha Blouse'
+    ],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q39',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title:
+        'What is the name of the place where Marley’s military headquarters is located?',
+    opts: ['Liberio', 'Shiganshina', 'Fort Salta', 'Marley'],
+    answerNo: 1,
+  ),
+  const QuestionEntity(
+    questionId: 'q40',
+    seriesId: 's9',
+    seriesName: 'Attack on Titan',
+    title: 'What is the main goal of the Eldian Restorationist Movement?',
+    opts: [
+      'End the reign of Marley',
+      'Free the Eldians from the Walls',
+      'Destroy the Marleyan government',
+      'Gain control of the Founding Titan'
+    ],
+    answerNo: 3,
+  ),
+];

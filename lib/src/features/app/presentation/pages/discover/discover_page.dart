@@ -88,9 +88,11 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           title: serie.name,
                           trailing: serie.info,
                           rating: double.parse(serie.rating),
+                          //TODO
                           completedRatio: 0, // Not applicable in discover
                           correctNo: 0, // Not applicable in discover
-                          wrongNo: 0, // Not applicable in discover
+                          wrongNo: 0,
+                          totalQuestionNo: 0, // Not applicable in discover
                         );
                       },
                     );

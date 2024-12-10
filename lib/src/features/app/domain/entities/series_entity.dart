@@ -8,7 +8,7 @@ class SeriesEntity {
     required this.description,
     required this.info,
     required this.rating,
-    required this.questionNo,
+    required this.totalQuestionNo,
   });
 
   factory SeriesEntity.fromFirestore(DocumentSnapshot doc) {
@@ -24,7 +24,7 @@ class SeriesEntity {
       description: json['description'] as String,
       info: json['info'] as String,
       rating: json['rating'] as String,
-      questionNo: json['questionNo'] as int,
+      totalQuestionNo: json['questionNo'] as int,
     );
   }
   final String seriesId;
@@ -33,7 +33,7 @@ class SeriesEntity {
   final String description;
   final String info;
   final String rating;
-  final int questionNo;
+  final int totalQuestionNo;
 
   Map<String, dynamic> toJson() {
     return {
@@ -43,7 +43,7 @@ class SeriesEntity {
       'description': description,
       'info': info,
       'rating': rating,
-      'questionNo': questionNo,
+      'questionNo': totalQuestionNo,
     };
   }
 }

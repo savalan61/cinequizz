@@ -15,6 +15,7 @@ class SeriesCard extends StatelessWidget {
     required this.completedRatio,
     required this.correctNo,
     required this.wrongNo,
+    required this.totalQuestionNo,
     required this.onTap,
     super.key,
   });
@@ -25,6 +26,7 @@ class SeriesCard extends StatelessWidget {
   final double completedRatio;
   final int correctNo;
   final int wrongNo;
+  final int totalQuestionNo;
   final void Function()? onTap;
 
   @override
@@ -61,15 +63,21 @@ class SeriesCard extends StatelessWidget {
                   ),
                   const Divider(),
                   AppCardTile(
-                    icon: LucideIcons.check,
+                    icon: LucideIcons.squareCheck,
                     title: 'Correct :',
                     trailing: correctNo.toString(),
                     // color: AppColors.green,
                   ),
                   AppCardTile(
-                    icon: LucideIcons.x,
+                    icon: LucideIcons.squareX,
                     title: 'Wrong :',
                     trailing: wrongNo.toString(),
+                    // color: AppColors.red,
+                  ),
+                  AppCardTile(
+                    icon: LucideIcons.rows4,
+                    title: 'Total Questions :',
+                    trailing: totalQuestionNo.toString(),
                     // color: AppColors.red,
                   ),
                   const SizedBox(height: 10),

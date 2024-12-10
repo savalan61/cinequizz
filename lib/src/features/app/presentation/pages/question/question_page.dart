@@ -43,7 +43,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
   @override
   void dispose() {
-    questionCubit.reset(); // Reset the cubit state
+    questionCubit.reset();
     super.dispose();
   }
 
@@ -87,7 +87,8 @@ class _QuestionViewState extends State<QuestionView> {
     final currentSeries = serieState.series.firstWhere(
       (element) => element.seriesId == widget.seriesId,
     );
-    final isLastQuestion = answeredQuestions.length == serieState.series.length;
+    final isLastQuestion =
+        answeredQuestions.length == currentSeries.totalQuestionNo;
 
     final totalScore = serieState.totalScore;
     return BlocConsumer<QuestionCubit, QuestionsState>(
@@ -134,7 +135,7 @@ class _QuestionViewState extends State<QuestionView> {
                       SizedBox(
                         height: 20,
                         child: StepProgressIndicator(
-                          totalSteps: currentSeries.questionNo,
+                          totalSteps: currentSeries.totalQuestionNo,
                           currentStep: answeredQuestions.length + 1,
                           selectedColor: AppColors.deepBlue,
                         ),
@@ -165,11 +166,11 @@ class _QuestionViewState extends State<QuestionView> {
                             alignment: Alignment.bottomRight,
                             child: ShadButton(
                               enabled: state.currentQuestionNo <
-                                  currentSeries.questionNo - 1,
+                                  currentSeries.totalQuestionNo - 1,
                               pressedBackgroundColor: Colors.transparent,
                               onPressed: () {
                                 if (state.currentQuestionNo <
-                                    currentSeries.questionNo - 1) {
+                                    currentSeries.totalQuestionNo - 1) {
                                   timer.pause();
                                   Future.delayed(
                                     const Duration(seconds: 1),
@@ -177,12 +178,12 @@ class _QuestionViewState extends State<QuestionView> {
                                   );
                                   context
                                       .read<QuestionCubit>()
-                                      .submitAnswer(selectedOption: -1);
+                                      .submitAnswer(selectedOption: -10);
                                 }
                               },
                               child: Text(
                                 state.currentQuestionNo !=
-                                        currentSeries.questionNo - 1
+                                        currentSeries.totalQuestionNo - 1
                                     ? 'Next'
                                     : 'Finished',
                               ),
@@ -225,11 +226,10 @@ class _QuestionViewState extends State<QuestionView> {
                                 onTap: () {
                                   if (state.enableBtn) {
                                     timer.pause();
-                                    context
-                                        .read<QuestionCubit>()
-                                        .submitAnswer(selectedOption: option);
+                                    context.read<QuestionCubit>().submitAnswer(
+                                        selectedOption: option + 1);
                                     if (state.currentQuestionNo <
-                                        currentSeries.questionNo - 1) {
+                                        currentSeries.totalQuestionNo - 1) {
                                       Future.delayed(
                                         const Duration(seconds: 1),
                                         timer.start,
@@ -276,7 +276,7 @@ class _QuestionViewState extends State<QuestionView> {
                         child: SizedBox.square(
                           dimension: 70,
                           child: CircularCountDownTimer(
-                            duration: 10,
+                            duration: AppConstants.questionTimeLimit,
                             initialDuration: 0,
                             controller: timer,
                             width: 50,
@@ -303,10 +303,10 @@ class _QuestionViewState extends State<QuestionView> {
                             onStart: () {},
                             onComplete: () {
                               if (state.currentQuestionNo <
-                                  currentSeries.questionNo - 1) {
+                                  currentSeries.totalQuestionNo - 1) {
                                 context
                                     .read<QuestionCubit>()
-                                    .submitAnswer(selectedOption: -1);
+                                    .submitAnswer(selectedOption: -10);
                                 Future.delayed(
                                   const Duration(seconds: 1),
                                   timer.start,
@@ -339,60 +339,6 @@ class _QuestionViewState extends State<QuestionView> {
     );
     // : SizedBox.shrink()
   }
-
-//   void scoreHandler(double score, QuestionsState state, BuildContext context) {
-//     String message;
-//     String title;
-//     String lottieAnimation;
-//     String buttonText;
-
-//     if (score >= 0.8) {
-//       message = 'Congratulations, you won ${state.correctNo} points';
-//       title = 'Congratulations';
-//       lottieAnimation = 'assets/images/win.json';
-//       buttonText = 'Claim';
-//     } else if (score >= 0.5) {
-//       message = 'Good job! You scored ${state.correctNo} points';
-//       title = 'Good Job';
-//       lottieAnimation = 'assets/images/win.json';
-//       buttonText = 'Okay';
-//     } else {
-//       message = 'You scored ${state.correctNo} points. Better luck next time!';
-//       title = 'Not Good';
-//       lottieAnimation = 'assets/images/lose.json';
-//       buttonText = 'Okay';
-//     }
-
-//     // Display the dialog
-//     Dialogs.materialDialog(
-//       color: AppColors.background,
-//       barrierDismissible: false,
-//       msg: message,
-//       title: title,
-//       lottieBuilder: Lottie.asset(
-//         lottieAnimation,
-//         fit: BoxFit.contain,
-//       ),
-//       context: context,
-//       actionsBuilder: (BuildContext context) {
-//         return [
-//           ShadButton(
-//             pressedBackgroundColor: Colors.transparent,
-//             onPressed: () {
-//               if (score >= 0.8) {
-//                 GoRouter.of(context).goNamed(AppRoutes.home.name);
-//               } else {
-//                 GoRouter.of(context).goNamed(AppRoutes.home.name);
-//               }
-//             },
-//             child: Text(
-//               buttonText,
-//             ),
-//           ),
-//         ];
-//       },
-//     );
-//   }
 }
 
 const optionsHeaders = ['A', 'B', 'C', 'D'];

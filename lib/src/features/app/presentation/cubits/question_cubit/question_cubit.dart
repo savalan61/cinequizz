@@ -43,7 +43,7 @@ class QuestionCubit extends Cubit<QuestionsState> {
         wrongNo: isCorrect ? state.wrongNo : state.wrongNo + 1,
         colors: [
           for (int i = 0; i < state.colors.length; i++)
-            if (i == state.questions[state.currentQuestionNo].answerNo)
+            if (i == state.questions[state.currentQuestionNo].answerNo - 1)
               true
             else
               state.colors[i],
@@ -81,6 +81,7 @@ class QuestionCubit extends Cubit<QuestionsState> {
   }
 
   void reset() => emit(QuestionsState.initial());
+
   Future<void> getSeriesQuestions({
     required String seriesId,
     required String userId,
