@@ -3,6 +3,7 @@ enum AppRoutes {
   splash('/splash'),
   home('/home'),
   discover('/discover'),
+  statistics('/statistics'),
   question('/question', path: '/question/:series_id'),
   leaderboard('/leaderboard'),
   profile('/profile');

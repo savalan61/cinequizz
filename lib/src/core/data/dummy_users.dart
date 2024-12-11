@@ -35,12 +35,13 @@ final dummyUsers = List<UserStats>.generate(
     final wrongNo = index + random.nextInt(5); // Randomly add 0 to 4
 
     return UserStats(
-      userId: 'dummyUser${index + 1}',
-      userName: realNames[index],
-      correctNo: correctNo,
-      wrongNo: wrongNo,
-      avatarSeed: realNames[index],
-      answeredQuestions: [], // Add default empty list for answeredQuestions
-    );
+        userId: 'dummyUser${index + 1}',
+        userName: realNames[index],
+        correctNo: correctNo,
+        wrongNo: wrongNo,
+        avatarSeed: realNames[index],
+        answeredQuestions: [],
+        totalNoAnswers: 10 // Add default empty list for answeredQuestions
+        );
   },
 );

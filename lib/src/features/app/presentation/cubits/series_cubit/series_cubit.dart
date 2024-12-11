@@ -1,13 +1,15 @@
 // ignore_for_file: cascade_invocations
 
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:cinequizz/src/core/shared/class/usecase.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
+import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/domain/entities/series_entity.dart';
 import 'package:cinequizz/src/features/app/domain/entities/user_stats.dart';
 import 'package:cinequizz/src/features/app/domain/usecases/_usecases.dart';
+import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
+import 'package:cinequizz/src/features/auth/domain/repository/auth_repository_if.dart';
 
 part 'series_state.dart';
 
@@ -19,11 +21,18 @@ class SeriesCubit extends Cubit<SeriesState> {
   })  : _allSeriesUsecase = allSeriesUseCase,
         _fetchUserStatsUsecase = fetchUserStatsUsecase,
         _fetchAllUsersStatsUseCase = fetchAllUsersStatsUseCase,
-        super(SeriesState.initial());
+        super(SeriesState.initial()) {
+    _initializeUser();
+  }
 
   final AllSeriesUsecase _allSeriesUsecase;
   final FetchUserStatsUsecase _fetchUserStatsUsecase;
   final FetchAllUsersStatsUseCase _fetchAllUsersStatsUseCase;
+  late AuthUser user;
+
+  Future<void> _initializeUser() async {
+    user = await sl<AuthRepositoryIf>().user.first;
+  }
 
   Future<void> fetchAllSeries() async {
     final res = await _allSeriesUsecase(NoParams());
@@ -47,8 +56,9 @@ class SeriesCubit extends Cubit<SeriesState> {
     );
   }
 
-  void fetchUserStats({required String userId}) {
-    final userStatsStream = _fetchUserStatsUsecase(userId);
+  Future<void> fetchUserStats() async {
+    await _initializeUser(); // Ensure user is initialized
+    final userStatsStream = _fetchUserStatsUsecase(user.id);
 
     userStatsStream.listen(
       (userStats) {

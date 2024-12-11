@@ -3,11 +3,9 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
 import 'package:cinequizz/src/features/app/domain/usecases/_usecases.dart';
 import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
-import 'package:cinequizz/src/features/auth/presentation/app/presentation/bloc/app_bloc.dart';
 
 part 'question_state.dart';
 

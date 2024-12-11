@@ -4,8 +4,6 @@ import 'dart:developer';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cinequizz/src/features/app/domain/entities/answered_questions.dart';
-import 'package:cinequizz/src/features/auth/data/repository/auth_repo_impl.dart';
-import 'package:cinequizz/src/features/auth/domain/repository/auth_repository_if.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

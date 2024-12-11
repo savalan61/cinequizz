@@ -1,12 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:cinequizz/src/core/data/questions/series/arcane.dart';
-import 'package:cinequizz/src/core/data/questions/series/attack_on_titan.dart';
-import 'package:cinequizz/src/core/data/questions/series/chernobyl.dart';
-import 'package:cinequizz/src/core/data/questions/series/dexter.dart';
-import 'package:cinequizz/src/core/data/questions/series/peack_blinders.dart';
-import 'package:cinequizz/src/core/data/questions/series/the_penguin.dart';
-import 'package:cinequizz/src/core/data/questions/series/true_detectice.dart';
 import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
 import 'package:cinequizz/src/features/app/domain/entities/series_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

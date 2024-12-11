@@ -1,7 +1,5 @@
 // ignore_for_file: cascade_invocations
 
-import 'dart:developer';
-
 import 'package:cinequizz/src/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

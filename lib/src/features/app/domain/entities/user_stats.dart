@@ -9,6 +9,7 @@ class UserStats {
     required this.wrongNo,
     required this.userName,
     required this.avatarSeed,
+    required this.totalNoAnswers,
   });
 
   // Convert Firestore document to UserStats
@@ -20,6 +21,11 @@ class UserStats {
           entry.value as List<dynamic>?, entry.key);
     }).toList();
 
+    final totalNoAnswers = answeredQuestions.fold<int>(
+      0,
+      (previousValue, element) => previousValue + element.questions.length,
+    );
+
     return UserStats(
       userId: data['userId'] as String? ?? '',
       answeredQuestions: answeredQuestions,
@@ -27,6 +33,7 @@ class UserStats {
       wrongNo: data['wrongNo'] as int? ?? 0,
       userName: data['userName'] as String? ?? '',
       avatarSeed: data['avatarSeed'] as String? ?? '',
+      totalNoAnswers: totalNoAnswers,
     );
   }
 
@@ -36,7 +43,8 @@ class UserStats {
         correctNo = 0,
         wrongNo = 0,
         userName = '',
-        avatarSeed = '';
+        avatarSeed = '',
+        totalNoAnswers = 0;
 
   final String userId;
   final List<AnsweredQuestions> answeredQuestions;
@@ -44,6 +52,7 @@ class UserStats {
   final int wrongNo;
   final String userName;
   final String avatarSeed;
+  final int totalNoAnswers;
 
   // Convert UserStats to a map for Firestore
   Map<String, dynamic> toMap() {
@@ -56,6 +65,7 @@ class UserStats {
       'wrongNo': wrongNo,
       'userName': userName,
       'avatarSeed': avatarSeed,
+      'totalNoAnswers': totalNoAnswers,
     };
   }
 }

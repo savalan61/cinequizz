@@ -8,6 +8,7 @@ class AppCardTile extends StatelessWidget {
     required this.title,
     required this.trailing,
     this.color,
+    this.iconColor,
     super.key,
   });
 
@@ -15,6 +16,7 @@ class AppCardTile extends StatelessWidget {
   final String title;
   final String trailing;
   final Color? color;
+  final Color? iconColor;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,6 +29,7 @@ class AppCardTile extends StatelessWidget {
               Icon(
                 icon,
                 size: 20,
+                color: iconColor,
               ),
               const SizedBox(
                 width: 10,

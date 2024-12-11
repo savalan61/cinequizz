@@ -13,7 +13,7 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigationBarItems = mainNavigationBarItems(
       series: 'Series',
-      discover: 'Discover',
+      statistics: 'Statistics',
       leaderBoard: 'Leader Board',
       profile: 'Profile',
     );
@@ -54,13 +54,13 @@ class BottomNavBar extends StatelessWidget {
 
 List<NavBarItem> mainNavigationBarItems({
   required String series,
-  required String discover,
+  required String statistics,
   required String leaderBoard,
   required String profile,
 }) =>
     [
       NavBarItem(icon: LucideIcons.tv, label: series),
-      NavBarItem(icon: LucideIcons.search, label: discover),
+      NavBarItem(icon: LucideIcons.chartPie, label: statistics),
       NavBarItem(icon: LucideIcons.trophy, label: leaderBoard),
       NavBarItem(icon: LucideIcons.user, label: profile),
     ];

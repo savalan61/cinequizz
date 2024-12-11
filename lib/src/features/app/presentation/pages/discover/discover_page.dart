@@ -92,7 +92,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           completedRatio: 0, // Not applicable in discover
                           correctNo: 0, // Not applicable in discover
                           wrongNo: 0,
-                          totalQuestionNo: 0, // Not applicable in discover
+                          totalQuestionNo: 0,
+                          userId: '', // Not applicable in discover
                         );
                       },
                     );

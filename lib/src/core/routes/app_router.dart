@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:cinequizz/src/features/app/presentation/pages/statistics/statistics_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cinequizz/src/core/routes/app_routes.dart';
-import 'package:cinequizz/src/features/app/presentation/pages/discover/discover_page.dart';
 import 'package:cinequizz/src/features/app/presentation/pages/home/pages/home_page.dart';
 import 'package:cinequizz/src/features/app/presentation/pages/leaderboard/leaderboard.dart';
 import 'package:cinequizz/src/features/app/presentation/pages/question/question_page.dart';
@@ -20,20 +20,6 @@ class AppRouter {
         navigatorKey: _rootNavigatorKey,
         initialLocation: AppRoutes.home.route,
         routes: [
-          // GoRoute(
-          //   path: AppRoutes.splash.route,
-          //   name: AppRoutes.splash.name,
-          //   pageBuilder: (context, state) {
-          //     return CustomTransitionPage(
-          //       key: state.pageKey,
-          //       child: const SplashPage(),
-          //       transitionsBuilder:
-          //           (context, animation, secondaryAnimation, child) {
-          //         return FadeTransition(opacity: animation, child: child);
-          //       },
-          //     );
-          //   },
-          // ),
           GoRoute(
             path: AppRoutes.auth.route,
             name: AppRoutes.auth.name,
@@ -84,9 +70,9 @@ class AppRouter {
               StatefulShellBranch(
                 routes: [
                   GoRoute(
-                    path: AppRoutes.discover.route,
-                    name: AppRoutes.discover.name,
-                    builder: (context, state) => const DiscoverPage(),
+                    path: AppRoutes.statistics.route,
+                    name: AppRoutes.statistics.name,
+                    builder: (context, state) => const StatisticsPage(),
                   ),
                 ],
               ),
