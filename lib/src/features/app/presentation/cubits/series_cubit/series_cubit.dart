@@ -112,4 +112,6 @@ class SeriesCubit extends Cubit<SeriesState> {
       ),
     );
   }
+
+  void resetSeriesCubit() => emit(SeriesState.initial());
 }

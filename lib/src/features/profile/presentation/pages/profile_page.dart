@@ -1,3 +1,6 @@
+import 'package:cinequizz/src/di.dart';
+import 'package:cinequizz/src/features/app/presentation/cubits/question_cubit/question_cubit.dart';
+import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart' hide TextDirection;
@@ -72,6 +75,8 @@ class ProfileView extends StatelessWidget {
                     onTap: () => context.confirmAction(
                       fn: () {
                         context.read<AppBloc>().add(const AppLogoutRequested());
+                        sl<QuestionCubit>().resetQuestionCubit();
+                        sl<SeriesCubit>().resetSeriesCubit();
                       },
                       title: 'Logout',
                       content: 'Are you sure to logout from your account?',

@@ -4,6 +4,8 @@ import 'dart:developer';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cinequizz/src/features/app/domain/entities/answered_questions.dart';
+import 'package:cinequizz/src/features/auth/data/repository/auth_repo_impl.dart';
+import 'package:cinequizz/src/features/auth/domain/repository/auth_repository_if.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +35,7 @@ class _QuestionPageState extends State<QuestionPage> {
   @override
   void initState() {
     super.initState();
+
     questionCubit = context.read<QuestionCubit>();
     user = (sl<AppBloc>().state as Authenticated).user;
     questionCubit.getSeriesQuestions(
@@ -43,7 +46,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
   @override
   void dispose() {
-    questionCubit.reset();
+    questionCubit.resetQuestionCubit();
     super.dispose();
   }
 
@@ -176,9 +179,8 @@ class _QuestionViewState extends State<QuestionView> {
                                     const Duration(seconds: 1),
                                     timer.start,
                                   );
-                                  context
-                                      .read<QuestionCubit>()
-                                      .submitAnswer(selectedOption: -10);
+                                  context.read<QuestionCubit>().submitAnswer(
+                                      selectedOption: -10, user: widget.user);
                                 }
                               },
                               child: Text(
@@ -216,7 +218,7 @@ class _QuestionViewState extends State<QuestionView> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 10),
-                              child: Tappable(
+                              child: Tappable.scaled(
                                 throttle: true,
                                 throttleDuration: const Duration(seconds: 1),
                                 borderRadius: 5,
@@ -227,7 +229,8 @@ class _QuestionViewState extends State<QuestionView> {
                                   if (state.enableBtn) {
                                     timer.pause();
                                     context.read<QuestionCubit>().submitAnswer(
-                                        selectedOption: option + 1);
+                                        selectedOption: option + 1,
+                                        user: widget.user);
                                     if (state.currentQuestionNo <
                                         currentSeries.totalQuestionNo - 1) {
                                       Future.delayed(
@@ -304,9 +307,8 @@ class _QuestionViewState extends State<QuestionView> {
                             onComplete: () {
                               if (state.currentQuestionNo <
                                   currentSeries.totalQuestionNo - 1) {
-                                context
-                                    .read<QuestionCubit>()
-                                    .submitAnswer(selectedOption: -10);
+                                context.read<QuestionCubit>().submitAnswer(
+                                    selectedOption: -10, user: widget.user);
                                 Future.delayed(
                                   const Duration(seconds: 1),
                                   timer.start,

@@ -32,11 +32,12 @@ Future<void> init() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
     final firebaseAuth = FirebaseAuth.instance;
     final tokenStorage = InMemoryTokenStorage();
     final firebaseFirestore = FirebaseFirestore.instance;
 
-    // AuthDatasource can be a factory as it doesn't hold state
+    // Datasources
     sl.registerFactory<AuthDatasource>(
       () => AuthDatasource(
         tokenStorage: tokenStorage,
@@ -44,41 +45,20 @@ Future<void> init() async {
       ),
     );
 
-    // Repositories should be singletons as they interact with data
-    // sources and maintain state
-    sl.registerLazySingleton<AuthRepositoryIf>(
-      () => AuthRepoImpl(authDatasource: sl<AuthDatasource>()),
-    );
-
-    final user = await sl<AuthRepositoryIf>().user.first;
-    log(user.email.toString());
-
-    // Cubits and Blocs should be singletons to maintain state across the app
-    sl.registerLazySingleton<SignUpCubit>(
-      () => SignUpCubit(authRepositoryIf: sl<AuthRepositoryIf>()),
-    );
-
-    sl.registerLazySingleton<LoginCubit>(
-      () => LoginCubit(authRepositoryIf: sl<AuthRepositoryIf>()),
-    );
-
-    sl.registerLazySingleton<AppBloc>(
-      () => AppBloc(user: user, authRepositoryIf: sl<AuthRepositoryIf>()),
-    );
-
-    // AppDataSource can be a factory as it doesn't hold state
     sl.registerFactory<AppDataSource>(
       () => AppDataSource(db: firebaseFirestore),
     );
 
-    // AppRepoIf should be a singleton to maintain consistency
-    //and state across the app
+    // Repositories
+    sl.registerLazySingleton<AuthRepositoryIf>(
+      () => AuthRepoImpl(authDatasource: sl<AuthDatasource>()),
+    );
+
     sl.registerLazySingleton<AppRepoIf>(
       () => AppRepoImpl(appDataSource: sl<AppDataSource>()),
     );
 
-    // Use cases can be factories as they don't hold state
-
+    // Use Cases
     sl.registerFactory<FetchUserStatsUsecase>(
       () => FetchUserStatsUsecase(appRepoIf: sl<AppRepoIf>()),
     );
@@ -94,11 +74,26 @@ Future<void> init() async {
     sl.registerFactory<SeriesQuestionsUsecase>(
       () => SeriesQuestionsUsecase(appRepoIf: sl<AppRepoIf>()),
     );
+
     sl.registerFactory<SaveAnsweredQuestionsUsecase>(
       () => SaveAnsweredQuestionsUsecase(appRepoIf: sl<AppRepoIf>()),
     );
 
-    // Cubits should be singletons to maintain state across the app
+    // Cubits/Blocs
+    sl.registerLazySingleton<SignUpCubit>(
+      () => SignUpCubit(authRepositoryIf: sl<AuthRepositoryIf>()),
+    );
+
+    sl.registerLazySingleton<LoginCubit>(
+      () => LoginCubit(authRepositoryIf: sl<AuthRepositoryIf>()),
+    );
+
+    final user = await sl<AuthRepositoryIf>().user.first;
+
+    sl.registerLazySingleton<AppBloc>(
+      () => AppBloc(user: user, authRepositoryIf: sl<AuthRepositoryIf>()),
+    );
+
     sl.registerLazySingleton<QuestionCubit>(
       () => QuestionCubit(
         saveAnsweredQuestionsUsecase: sl<SaveAnsweredQuestionsUsecase>(),
@@ -110,7 +105,7 @@ Future<void> init() async {
       () => SeriesCubit(
         allSeriesUseCase: sl<AllSeriesUsecase>(),
         fetchUserStatsUsecase: sl<FetchUserStatsUsecase>(),
-        fetchAllUsersStatsUseCase: sl(),
+        fetchAllUsersStatsUseCase: sl<FetchAllUsersStatsUseCase>(),
       ),
     );
 

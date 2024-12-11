@@ -53,9 +53,9 @@ class _HomePageState extends State<HomePage> {
         BlocListener<AppBloc, AppState>(
           listener: (context, state) {
             if (state is Authenticated) {
-              // setState(() {
-              user = state.user;
-              // });
+              setState(() {
+                user = state.user;
+              });
             }
           },
         ),
@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
                       _loadData(); // Reload the data when pull-to-refresh happens
                     },
                     child: ListView.builder(
+                      cacheExtent: 2000,
                       itemCount: seriesState.series.length,
                       itemBuilder: (context, index) => _buildSeriesCard(
                         context,

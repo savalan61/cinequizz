@@ -64,21 +64,24 @@ class SeriesCard extends StatelessWidget {
                   const Divider(),
                   AppCardTile(
                     icon: LucideIcons.squareCheck,
-                    title: 'Correct :',
+                    title: 'Correct : ',
                     trailing: correctNo.toString(),
-                    // color: AppColors.green,
                   ),
                   AppCardTile(
                     icon: LucideIcons.squareX,
-                    title: 'Wrong :',
+                    title: 'Wrong : ',
                     trailing: wrongNo.toString(),
-                    // color: AppColors.red,
+                  ),
+                  AppCardTile(
+                    icon: LucideIcons.rows2,
+                    title: 'Answered : ',
+                    trailing:
+                        (completedRatio * totalQuestionNo).toStringAsFixed(0),
                   ),
                   AppCardTile(
                     icon: LucideIcons.rows4,
-                    title: 'Total Questions :',
+                    title: 'Questions :',
                     trailing: totalQuestionNo.toString(),
-                    // color: AppColors.red,
                   ),
                   const SizedBox(height: 10),
                   SizedBox(

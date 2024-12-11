@@ -29,7 +29,7 @@ class AppDataSource {
   }
 
 // Function to fetch user's answered questions for a given series
-  Future<List<QuestionEntity>> fetchAnsweredQuestions(
+  Future<List<String>> fetchAnsweredQuestions(
       String userId, String seriesId) async {
     final userDoc = await _db.collection('users').doc(userId).get();
     if (userDoc.exists) {
@@ -40,13 +40,14 @@ class AppDataSource {
       if (answeredQuestions.isNotEmpty) {
         final answeredQuestionIds =
             answeredQuestions.map((e) => e['questionId'] as String).toList();
-        final querySnapshot = await _db
-            .collection(seriesId)
-            .where(FieldPath.documentId, whereIn: answeredQuestionIds)
-            .get();
-        return querySnapshot.docs
-            .map((doc) => QuestionEntity.fromFirestore(doc))
-            .toList();
+        return answeredQuestionIds;
+        // final querySnapshot = await _db
+        //     .collection(seriesId)
+        //     .where(FieldPath.documentId, whereIn: answeredQuestionIds)
+        //     .get();
+        // return querySnapshot.docs
+        //     .map((doc) => QuestionEntity.fromFirestore(doc))
+        //     .toList();
       }
     }
     return [];
@@ -58,10 +59,10 @@ class AppDataSource {
     final allQuestions = await fetchAllQuestions(seriesId);
     final answeredQuestions = await fetchAnsweredQuestions(userId, seriesId);
 
-    final answeredQuestionIds =
-        answeredQuestions.map((q) => q.questionId).toSet();
+    // final answeredQuestionIds =
+    //     answeredQuestions.map((q) => q.questionId).toSet();
     final unansweredQuestions = allQuestions
-        .where((q) => !answeredQuestionIds.contains(q.questionId))
+        .where((q) => !answeredQuestions.contains(q.questionId))
         .toList();
 
     return unansweredQuestions;

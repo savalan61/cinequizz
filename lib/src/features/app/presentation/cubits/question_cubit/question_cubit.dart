@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/domain/entities/question_entity.dart';
 import 'package:cinequizz/src/features/app/domain/usecases/_usecases.dart';
+import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
 import 'package:cinequizz/src/features/auth/presentation/app/presentation/bloc/app_bloc.dart';
 
 part 'question_state.dart';
@@ -19,9 +20,9 @@ class QuestionCubit extends Cubit<QuestionsState> {
         super(QuestionsState.initial());
   final SeriesQuestionsUsecase _seriesQuestionsUsecase;
   final SaveAnsweredQuestionsUsecase _answeredQuestionsUsecase;
-  final user = (sl<AppBloc>().state as Authenticated).user;
+  // final user = (sl<AppBloc>().state as Authenticated).user;
 
-  void submitAnswer({required int selectedOption}) {
+  void submitAnswer({required int selectedOption, required AuthUser user}) {
     final isCorrect =
         selectedOption == state.questions[state.currentQuestionNo].answerNo;
     final seriesId = state.questions[state.currentQuestionNo].seriesId;
@@ -80,7 +81,7 @@ class QuestionCubit extends Cubit<QuestionsState> {
     await _answeredQuestionsUsecase(answer);
   }
 
-  void reset() => emit(QuestionsState.initial());
+  void resetQuestionCubit() => emit(QuestionsState.initial());
 
   Future<void> getSeriesQuestions({
     required String seriesId,
