@@ -12,6 +12,7 @@ import 'package:cinequizz/src/features/auth/presentation/app/presentation/bloc/a
 import 'package:cinequizz/src/features/auth/presentation/app/presentation/pages/app_view.dart';
 
 void main() async {
+  //
   await bootstrap(() async {
     return MultiBlocProvider(
       providers: [
