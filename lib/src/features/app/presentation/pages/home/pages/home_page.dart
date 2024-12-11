@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
           Text(user.name.toString()),
           const Spacer(),
           AnimatedFlipCounter(
-            duration: 4.seconds,
+            duration: 2.seconds,
             value: seriesState.totalScore,
             textStyle: TextStyle(
               fontSize: 20,

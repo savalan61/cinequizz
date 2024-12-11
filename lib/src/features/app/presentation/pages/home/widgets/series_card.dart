@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
-import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/features/app/presentation/pages/home/widgets/app_card_tile.dart';
 
 class SeriesCard extends StatelessWidget {
@@ -84,23 +82,23 @@ class SeriesCard extends StatelessWidget {
                     trailing: totalQuestionNo.toString(),
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: 15,
-                    child: LiquidLinearProgressIndicator(
-                      value: completedRatio,
-                      valueColor: const AlwaysStoppedAnimation(
-                        AppColors.primaryDar,
-                      ),
-                      backgroundColor: AppColors.darkGrey,
-                      borderColor: AppColors.brightGrey,
-                      borderWidth: 1,
-                      borderRadius: 12,
-                      center: Text(
-                        '(${(100 * completedRatio).toStringAsFixed(0)}%) ${completedRatio == 1 ? 'Completed' : 'Completing...'} ',
-                        style: context.bodySmall,
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 15,
+                  //   child: LiquidLinearProgressIndicator(
+                  //     value: completedRatio,
+                  //     valueColor: const AlwaysStoppedAnimation(
+                  //       AppColors.primaryDar,
+                  //     ),
+                  //     backgroundColor: AppColors.darkGrey,
+                  //     borderColor: AppColors.brightGrey,
+                  //     borderWidth: 1,
+                  //     borderRadius: 12,
+                  //     center: Text(
+                  //       '(${(100 * completedRatio).toStringAsFixed(0)}%) ${completedRatio == 1 ? 'Completed' : 'Completing...'} ',
+                  //       style: context.bodySmall,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
