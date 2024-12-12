@@ -55,12 +55,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: seriesState.series.length,
                     itemBuilder: (context, index) {
                       final series = seriesState.series[index];
-                      // final userStats = seriesState
-                      //     .currentUserStats.answeredQuestions
-                      //     .firstWhere(
-                      //   (element) => element.seriesId == series.seriesId,
-                      //   orElse: () => AnsweredQuestions.empty(),
-                      // );
+
                       return SeriesCardItem(
                         series: series,
                         seriesState: seriesState,

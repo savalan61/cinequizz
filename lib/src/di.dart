@@ -20,6 +20,7 @@ import 'package:cinequizz/src/features/auth/domain/repository/auth_repository_if
 import 'package:cinequizz/src/features/auth/presentation/app/presentation/bloc/app_bloc.dart';
 import 'package:cinequizz/src/features/auth/presentation/login/cubit/login_cubit.dart';
 import 'package:cinequizz/src/features/auth/presentation/sign_up/cubit/sign_up_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -34,6 +35,9 @@ Future<void> init() async {
     final firebaseAuth = FirebaseAuth.instance;
     final tokenStorage = InMemoryTokenStorage();
     final firebaseFirestore = FirebaseFirestore.instance;
+    final sharedPref = await SharedPreferences.getInstance();
+
+    sl.registerSingleton<SharedPreferences>(sharedPref);
 
     // Datasources
     sl.registerFactory<AuthDatasource>(

@@ -1,7 +1,8 @@
 class AppConstants {
-  // static const totalExamNo = 3;
-  // static const totalQuestions = 3;
-  static const questionTimeLimit = 10;
-  static const correctAnsScore = 100;
-  static const wrongAnsScore = 25;
+  AppConstants._();
+
+  static const int questionTimeLimit = 10;
+  static const int correctAnsScore = 100;
+  static const int wrongAnsScore = 25;
+  static const String isNewUser = 'isNewUser';
 }

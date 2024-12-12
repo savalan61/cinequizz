@@ -28,6 +28,7 @@ class ProfileView extends StatelessWidget {
       releaseFocus: true,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        backgroundColor: AppColors.background,
         title: const Text('Profile'),
         titleTextStyle: context.headlineSmall,
         centerTitle: false,
@@ -77,6 +78,7 @@ class ProfileView extends StatelessWidget {
                         context.read<AppBloc>().add(const AppLogoutRequested());
                         sl<QuestionCubit>().resetQuestionCubit();
                         sl<SeriesCubit>().resetSeriesCubit();
+                        // sl<SharedPreferences>().remove(AppConstants.isNewUser);
                       },
                       title: 'Logout',
                       content: 'Are you sure to logout from your account?',

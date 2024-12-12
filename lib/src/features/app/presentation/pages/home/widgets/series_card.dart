@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
@@ -20,6 +21,7 @@ class SeriesCard extends StatelessWidget {
     required this.userId,
     super.key,
   });
+
   final String imageUrl;
   final String title;
   final String trailing;
@@ -51,6 +53,16 @@ class SeriesCard extends StatelessWidget {
                 width: double.infinity,
                 height: 150,
                 fit: BoxFit.cover,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    width: double.infinity,
+                    height: 150,
+                    color: Colors.white,
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             Padding(

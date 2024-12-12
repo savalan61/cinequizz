@@ -47,9 +47,11 @@ class _StatisticsPageState extends State<StatisticsPage> {
                         const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        // Pie Chart
                         SizedBox(
-                          height: context.screenHeight / 3,
+                          height: context.screenHeight / 4,
                           child: PieChart(
                             PieChartData(
                               pieTouchData: PieTouchData(
@@ -72,50 +74,52 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                 show: false,
                               ),
                               sectionsSpace: 2,
-                              centerSpaceRadius: 40,
+                              centerSpaceRadius: 30,
                               sections: showingSections(correctNo, wrongNo,
                                   unAnsweredNo, totalNoAnswers),
                             ),
                           ),
                         ),
+                        // Statistics
                         SizedBox(
-                          height: context.screenHeight / 4,
+                          // height: context.screenHeight / 8,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    _buildLegendItem(AppColors.blue, 'Correct ',
-                                        correctNo, LucideIcons.squareCheck),
-                                    const SizedBox(height: AppSpacing.md),
-                                    _buildLegendItem(AppColors.red, 'Wrong ',
-                                        wrongNo, LucideIcons.squareX),
-                                  ],
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildLegendItem(AppColors.blue, 'Correct ',
+                                      correctNo, LucideIcons.squareCheck),
+                                  const SizedBox(height: AppSpacing.md),
+                                  _buildLegendItem(AppColors.grey, 'skipped ',
+                                      unAnsweredNo, LucideIcons.square),
+                                ],
                               ),
                               const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    _buildLegendItem(AppColors.grey, 'skipped ',
-                                        unAnsweredNo, LucideIcons.rows2),
-                                    const SizedBox(height: AppSpacing.md),
-                                    _buildLegendItem(
-                                        AppColors.darkGrey,
-                                        'Answered ',
-                                        totalNoAnswers,
-                                        LucideIcons.rows4),
-                                  ],
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildLegendItem(AppColors.red, 'Wrong ',
+                                      wrongNo, LucideIcons.squareX),
+                                  const SizedBox(height: AppSpacing.md),
+                                  _buildLegendItem(
+                                      AppColors.darkGrey,
+                                      'Answered ',
+                                      totalNoAnswers,
+                                      LucideIcons.rows4),
+                                ],
                               ),
                             ],
                           ),
                         ),
+                        const SizedBox(
+                          height: AppSize.md,
+                        ),
+                        const Divider(),
                       ],
                     ),
                   ),
@@ -148,8 +152,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
     final percentage = (value / totalNoAnswers) * 100;
     return PieChartSectionData(
       color: color,
-      value: value,
-      title: '${percentage.toStringAsFixed(0)}%',
+      value: totalNoAnswers == 0 ? 120 : value,
+      title: '${totalNoAnswers == 0 ? 0 : percentage.toStringAsFixed(0)}%',
       radius: radius,
       titleStyle: TextStyle(
         fontSize: fontSize,
@@ -167,11 +171,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
   ) {
     return Row(
       children: [
-        // Container(
-        //   width: 20,
-        //   height: 20,
-        //   color: color,
-        // ),
         Icon(
           icon,
           color: color,

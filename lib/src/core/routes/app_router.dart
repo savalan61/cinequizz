@@ -1,5 +1,8 @@
 import 'dart:async';
-
+import 'package:cinequizz/src/core/theme/_theme.dart';
+import 'package:cinequizz/src/di.dart';
+import 'package:cinequizz/src/features/onBoarding/onBoarding_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cinequizz/src/features/app/presentation/pages/statistics/statistics_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -61,9 +64,7 @@ class AppRouter {
                   GoRoute(
                     path: AppRoutes.home.route,
                     name: AppRoutes.home.name,
-                    builder: (context, state) {
-                      return const HomePage();
-                    },
+                    builder: (context, state) => const HomePage(),
                   ),
                 ],
               ),
@@ -96,17 +97,30 @@ class AppRouter {
               ),
             ],
           ),
+          GoRoute(
+            path: AppRoutes.onboarding.route,
+            name: AppRoutes.onboarding.name,
+            builder: (context, state) => const OnboardingScreen(),
+          ),
         ],
-        redirect: (context, state) {
+        redirect: (context, state) async {
           final authenticated = appBloc.state is Authenticated;
           final isInAuth = state.matchedLocation == AppRoutes.auth.route;
+
+          final prefs = sl<SharedPreferences>();
+          final isNewUser = prefs.getBool(AppConstants.isNewUser) ?? true;
 
           if (state.matchedLocation == AppRoutes.splash.route) {
             return null;
           }
 
-          if (!authenticated && !isInAuth) {
+          if (!authenticated) {
             return AppRoutes.auth.route;
+          }
+
+          if (isNewUser &&
+              state.matchedLocation != AppRoutes.onboarding.route) {
+            return AppRoutes.onboarding.route;
           }
 
           if (authenticated && isInAuth) {

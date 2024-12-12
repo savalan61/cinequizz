@@ -1,6 +1,7 @@
 enum AppRoutes {
   auth('/auth'),
   splash('/splash'),
+  onboarding('/onboarding'),
   home('/home'),
   discover('/discover'),
   statistics('/statistics'),

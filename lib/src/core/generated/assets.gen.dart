@@ -44,9 +44,8 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo3 =>
       const AssetGenImage('assets/images/app_logo3.png');
 
-  /// File path: assets/images/foodly (1).png
-  AssetGenImage get foodly1 =>
-      const AssetGenImage('assets/images/foodly (1).png');
+  /// File path: assets/images/friends.json
+  String get friends => 'packages/cinequizz/assets/images/friends.json';
 
   /// File path: assets/images/lose.json
   String get lose => 'packages/cinequizz/assets/images/lose.json';
@@ -55,62 +54,26 @@ class $AssetsImagesGen {
   AssetGenImage get profilePhoto =>
       const AssetGenImage('assets/images/profile-photo.png');
 
-  /// File path: assets/images/silver_badge.png
-  AssetGenImage get silverBadge =>
-      const AssetGenImage('assets/images/silver_badge.png');
+  /// File path: assets/images/progress.json
+  String get progress => 'packages/cinequizz/assets/images/progress.json';
 
-  /// File path: assets/images/splash_bg.png
-  AssetGenImage get splashBg =>
-      const AssetGenImage('assets/images/splash_bg.png');
-
-  /// File path: assets/images/top_pick_bg.png
-  AssetGenImage get topPickBg =>
-      const AssetGenImage('assets/images/top_pick_bg.png');
-
-  /// File path: assets/images/welcome.png
-  AssetGenImage get welcome => const AssetGenImage('assets/images/welcome.png');
+  /// File path: assets/images/series.png
+  AssetGenImage get series => const AssetGenImage('assets/images/series.png');
 
   /// File path: assets/images/win.json
   String get win => 'packages/cinequizz/assets/images/win.json';
-
-  /// File path: assets/images/won_badge_1.png
-  AssetGenImage get wonBadge1 =>
-      const AssetGenImage('assets/images/won_badge_1.png');
-
-  /// File path: assets/images/won_badge_2.png
-  AssetGenImage get wonBadge2 =>
-      const AssetGenImage('assets/images/won_badge_2.png');
-
-  /// File path: assets/images/won_badge_3.png
-  AssetGenImage get wonBadge3 =>
-      const AssetGenImage('assets/images/won_badge_3.png');
-
-  /// File path: assets/images/won_badge_4.png
-  AssetGenImage get wonBadge4 =>
-      const AssetGenImage('assets/images/won_badge_4.png');
-
-  /// File path: assets/images/won_badge_5.png
-  AssetGenImage get wonBadge5 =>
-      const AssetGenImage('assets/images/won_badge_5.png');
 
   /// List of all assets
   List<dynamic> get values => [
         appLogo,
         appLogo2,
         appLogo3,
-        foodly1,
+        friends,
         lose,
         profilePhoto,
-        silverBadge,
-        splashBg,
-        topPickBg,
-        welcome,
-        win,
-        wonBadge1,
-        wonBadge2,
-        wonBadge3,
-        wonBadge4,
-        wonBadge5
+        progress,
+        series,
+        win
       ];
 }
 

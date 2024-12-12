@@ -1,6 +1,8 @@
 // ignore_for_file: cascade_invocations
 
 import 'package:cinequizz/src/core/data/dummy_users.dart';
+import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
+import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/core/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,8 +29,9 @@ class _LeaderboardState extends State<Leaderboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.background,
         title: const Text('Leader Board'),
         centerTitle: true,
       ),
@@ -64,7 +67,7 @@ class _LeaderboardState extends State<Leaderboard> {
                     elevation: 5,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
-                    shadowColor: isMe ? Colors.red : Colors.blue,
+                    shadowColor: isMe ? Colors.red : AppColors.blue,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
