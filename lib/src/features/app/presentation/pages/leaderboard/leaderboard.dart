@@ -3,7 +3,6 @@
 import 'package:cinequizz/src/core/data/dummy_users.dart';
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
-import 'package:cinequizz/src/core/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random_avatar/random_avatar.dart';

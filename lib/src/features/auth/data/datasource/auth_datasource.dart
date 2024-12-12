@@ -72,16 +72,28 @@ class AuthDatasource {
     required String password,
   }) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'invalid-email':
+          throw const LogInWithPasswordFailure(
+              'The email address is not valid.');
+        case 'user-disabled':
+          throw const LogInWithPasswordFailure('This user has been disabled.');
+        case 'user-not-found':
+          throw const LogInWithPasswordFailure('No user found for this email.');
+        case 'wrong-password':
+          throw const LogInWithPasswordFailure('Wrong password provided.');
+        default:
+          throw const LogInWithPasswordFailure('An unknown error occurred.');
+      }
     } catch (e, t) {
-      Error.throwWithStackTrace(LogInWithPasswordFailure(e), t);
+      Error.throwWithStackTrace(LogInWithPasswordFailure(e.toString()), t);
     }
   }
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> signUpWithPassword({
     required String username,
@@ -90,13 +102,14 @@ class AuthDatasource {
     required String avatarSeed,
   }) async {
     try {
-      final userCred = await _firebaseAuth.createUserWithEmailAndPassword(
+      final userCred =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       final user = userCred.user;
       if (user == null) {
-        throw const SignUpWithPasswordCanceled('User is null');
+        throw const SignUpWithPasswordFailure('User is null');
       }
       await user.updateProfile(
         displayName: username,
@@ -104,7 +117,7 @@ class AuthDatasource {
       );
 
       // Add user to Firestore users collection
-      await _firestore.collection('users').doc(user.uid).set({
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'userName': username,
         'email': email,
         'avatarSeed': avatarSeed,
@@ -114,10 +127,23 @@ class AuthDatasource {
         'userId': user.uid,
       });
     } on FirebaseAuthException catch (e) {
-      // Handling specific Firebase authentication errors
-      throw SignUpWithPasswordFailure(e.message ?? 'An unknown error occurred');
+      switch (e.code) {
+        case 'email-already-in-use':
+          throw const SignUpWithPasswordFailure(
+              'The email address is already in use by another account.');
+        case 'invalid-email':
+          throw const SignUpWithPasswordFailure(
+              'The email address is not valid.');
+        case 'operation-not-allowed':
+          throw const SignUpWithPasswordFailure(
+              'Email/password accounts are not enabled.');
+        case 'weak-password':
+          throw const SignUpWithPasswordFailure('The password is too weak.');
+        default:
+          throw SignUpWithPasswordFailure(
+              e.message ?? 'An unknown error occurred.');
+      }
     } catch (e, t) {
-      // Handling any other exceptions
       Error.throwWithStackTrace(SignUpWithPasswordFailure(e.toString()), t);
     }
   }

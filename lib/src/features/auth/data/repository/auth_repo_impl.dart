@@ -65,7 +65,7 @@ class AuthRepoImpl implements AuthRepositoryIf {
   }
 
   @override
-  Future<void> signUpWithPassword({
+  Future<Either<Failure, void>> signUpWithPassword({
     required String username,
     required String email,
     required String password,
@@ -77,12 +77,9 @@ class AuthRepoImpl implements AuthRepositoryIf {
           email: email,
           password: password,
           avatarSeed: avatarSeed);
-    } on SignUpWithPasswordCanceled {
-      rethrow;
-    } on SignUpWithPasswordFailure {
-      rethrow;
-    } catch (e, t) {
-      Error.throwWithStackTrace(SignUpWithPasswordFailure(e), t);
+      return right(null);
+    } catch (e) {
+      return left(Failure(e.toString()));
     }
   }
 

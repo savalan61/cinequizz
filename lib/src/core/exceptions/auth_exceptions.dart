@@ -4,7 +4,8 @@ abstract class AuthenticationException implements Exception {
   final Object error;
 
   @override
-  String toString() => 'Authentication exception error: $error';
+  String toString() => '$error';
+  // String toString() => 'Authentication exception error: $error';
 }
 
 class SendLoginEmailLinkFailure extends AuthenticationException {

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/di.dart';
-import 'package:cinequizz/src/features/onBoarding/onBoarding_page.dart';
+import 'package:cinequizz/src/features/onBoarding/on_boarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cinequizz/src/features/app/presentation/pages/statistics/statistics_page.dart';
 import 'package:flutter/material.dart';

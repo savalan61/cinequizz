@@ -6,7 +6,7 @@ abstract class AuthRepositoryIf {
   ///Stream User
   Stream<AuthUser> get user;
 
-  Future<void> signUpWithPassword({
+  Future<Either<Failure, void>> signUpWithPassword({
     required String username,
     required String email,
     required String password,

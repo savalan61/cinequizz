@@ -52,7 +52,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
         final snackMessage = switch ('') {
           _ when status.isTimeoutError => timeoutMessage,
-          _ when status.isError => 'Something went wrong!',
+          _ when status.isError => state.message,
           _ => null,
         };
         if (snackMessage == null) return;

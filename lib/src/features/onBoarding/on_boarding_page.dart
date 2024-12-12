@@ -1,6 +1,5 @@
 import 'package:cinequizz/src/core/generated/assets.gen.dart';
 import 'package:cinequizz/src/core/routes/_routes.dart';
-import 'package:cinequizz/src/core/routes/app_router.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/di.dart';
 import 'package:flutter/material.dart';

@@ -19,10 +19,12 @@ class SignUpCubit extends Cubit<SignUpState> {
   void reset() {
     const password = Password.pure();
     const name = Username.pure();
+
     final newState = state.copyWith(
         password: password,
         name: name,
         submissionStatus: SubmissionStatus.idle,
+        message: '',
         avatarSeed: 'mahsa');
     emit(newState);
   }
@@ -36,14 +38,19 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(submissionStatus: SubmissionStatus.inProgress));
 
     try {
-      await _userRepository.signUpWithPassword(
+      final res = await _userRepository.signUpWithPassword(
         username: username,
         email: email,
         password: password,
         avatarSeed: state.avatarSeed,
       );
-
-      emit(state.copyWith(submissionStatus: SubmissionStatus.success));
+      res.fold(
+        (l) => emit(state.copyWith(
+            submissionStatus: SubmissionStatus.error, message: l.message)),
+        (r) {
+          emit(state.copyWith(submissionStatus: SubmissionStatus.success));
+        },
+      );
     } catch (error, stackTrace) {
       addError(error, stackTrace);
 
