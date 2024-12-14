@@ -84,21 +84,17 @@ class AuthRepoImpl implements AuthRepositoryIf {
   }
 
   @override
-  Future<void> updateProfile({
-    required String email,
-    required String password,
-    String? userName,
-  }) async {
+  Future<Either<Failure, void>> updateProfile(
+      {required String password, String? userName, String? avatarSeed}) async {
     try {
       await _authDatasource.updateProfile(
-        email: email,
+        avatarSeed: avatarSeed,
         password: password,
         userName: userName,
       );
-    } on UpdateProfileFailure {
-      rethrow;
-    } catch (e, t) {
-      Error.throwWithStackTrace(UpdateProfileFailure(e), t);
+      return right(null);
+    } catch (e) {
+      return left(Failure(e.toString()));
     }
   }
 

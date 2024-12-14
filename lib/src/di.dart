@@ -44,6 +44,7 @@ Future<void> init() async {
       () => AuthDatasource(
         tokenStorage: tokenStorage,
         firebaseAuth: firebaseAuth,
+        firebaseFirestore: firebaseFirestore,
       ),
     );
 

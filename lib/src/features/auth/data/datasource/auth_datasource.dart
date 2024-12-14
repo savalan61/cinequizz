@@ -10,10 +10,12 @@ import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
 class AuthDatasource {
   AuthDatasource({
     required TokenStorage tokenStorage,
-    FirebaseAuth? firebaseAuth,
+    required FirebaseAuth firebaseAuth,
     GoogleSignIn? googleSignIn,
+    required FirebaseFirestore firebaseFirestore,
   })  : _tokenStorage = tokenStorage,
-        _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+        _firebaseAuth = firebaseAuth,
+        _db = firebaseFirestore,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard() {
     user.listen(_onUserChanged);
   }
@@ -21,6 +23,7 @@ class AuthDatasource {
   final TokenStorage _tokenStorage;
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final FirebaseFirestore _db;
 
   Future<void> deleteAccount() async {
     try {
@@ -72,7 +75,7 @@ class AuthDatasource {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -102,8 +105,7 @@ class AuthDatasource {
     required String avatarSeed,
   }) async {
     try {
-      final userCred =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final userCred = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -117,7 +119,7 @@ class AuthDatasource {
       );
 
       // Add user to Firestore users collection
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      await _db.collection('users').doc(user.uid).set({
         'userName': username,
         'email': email,
         'avatarSeed': avatarSeed,
@@ -149,7 +151,7 @@ class AuthDatasource {
   }
 
   Future<void> updateProfile({
-    required String email,
+    String? avatarSeed,
     required String password,
     String? userName,
   }) async {
@@ -158,16 +160,46 @@ class AuthDatasource {
       if (user == null) {
         throw const UpdateProfileFailure('User is not authenticated');
       }
+
       final cred = EmailAuthProvider.credential(
         email: user.email!,
         password: password,
       );
 
       await user.reauthenticateWithCredential(cred);
-      await user.verifyBeforeUpdateEmail(email);
-      if (userName != null) await user.updateDisplayName(userName);
+
+      if (userName != null) {
+        await user.updateDisplayName(userName);
+      }
+
+      if (avatarSeed != null && avatarSeed.isNotEmpty) {
+        await _db.collection('users').doc(user.uid).update({
+          'avatarSeed': avatarSeed,
+          'userName': userName ?? user.displayName,
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'user-not-found':
+          throw const UpdateProfileFailure(
+              'No user found for the provided credentials.');
+        case 'wrong-password':
+          throw const UpdateProfileFailure(
+              'The provided password is incorrect.');
+        case 'invalid-credential':
+          throw const UpdateProfileFailure(
+              'The provided credential is malformed or has expired.');
+        case 'user-mismatch':
+          throw const UpdateProfileFailure(
+              'The credential does not correspond to the user.');
+        case 'requires-recent-login':
+          throw const UpdateProfileFailure(
+              'This operation is sensitive and requires recent authentication.');
+        default:
+          throw UpdateProfileFailure(e.message ?? 'An unknown error occurred.');
+      }
     } catch (e, t) {
-      Error.throwWithStackTrace(UpdateProfileFailure(e), t);
+      Error.throwWithStackTrace(UpdateProfileFailure(e.toString()), t);
     }
   }
 

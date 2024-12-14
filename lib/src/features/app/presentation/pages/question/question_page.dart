@@ -216,7 +216,7 @@ class _QuestionViewState extends State<QuestionView> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 10),
-                              child: Tappable.scaled(
+                              child: Tappable.faded(
                                 throttle: true,
                                 throttleDuration: const Duration(seconds: 1),
                                 borderRadius: 5,

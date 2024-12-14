@@ -22,27 +22,15 @@ final class AppUserChanged extends AppEvent {
 
 final class AppUpdateProfileRequested extends AppEvent {
   const AppUpdateProfileRequested(
-    this.userName, {
-    required this.email,
-    required this.password,
-  });
+      {this.userName, this.avatarSeed, required this.password});
 
-  final String email;
-  final String password;
+  final String? avatarSeed;
   final String? userName;
+  final String password;
 
   @override
-  List<Object?> get props => [email, password, userName];
+  List<Object?> get props => [avatarSeed, userName];
 }
-
-// final class AppUserLocationChanged extends AppEvent {
-//   const AppUserLocationChanged(this.location);
-
-//   final Location location;
-
-//   @override
-//   List<Object> get props => [location];
-// }
 
 final class AppDeleteAccountRequested extends AppEvent {
   const AppDeleteAccountRequested();

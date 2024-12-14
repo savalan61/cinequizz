@@ -53,14 +53,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final user = (state as Authenticated).user;
     emit(AppLoading(user: user));
     try {
-      await _authRepositoryIf.updateProfile(
-        email: event.email,
-        password: event.password,
+      final res = await _authRepositoryIf.updateProfile(
         userName: event.userName,
+        avatarSeed: event.avatarSeed,
+        password: event.password,
       );
-      emit(AppSuccessState(user: user));
-    } catch (e) {
-      emit(AppFailure(e.toString(), user: user));
+      res.fold(
+        (l) => emit(AppFailure(l.toString(), user: user)),
+        (r) => emit(AppSuccessState(user: user)),
+      );
+    } catch (e, t) {
+      addError(e, t);
     }
   }
 }

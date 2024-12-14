@@ -24,8 +24,8 @@ abstract class AuthRepositoryIf {
   //   String? userName,
   // });
 
-  Future<void> updateProfile({
-    required String email,
+  Future<Either<Failure, void>> updateProfile({
+    String? avatarSeed,
     required String password,
     String? userName,
   });

@@ -1,12 +1,10 @@
 import 'package:cinequizz/src/core/extensions/tappable_extension.dart';
-import 'package:cinequizz/src/di.dart';
 import 'package:flutter/material.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:random_avatar/random_avatar.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppAppbar extends StatelessWidget implements PreferredSizeWidget {
   const AppAppbar({super.key, required this.seriesState});
@@ -21,7 +19,7 @@ class AppAppbar extends StatelessWidget implements PreferredSizeWidget {
           Tappable(
             onTap: () {
               // run();
-              sl<SharedPreferences>().clear();
+              // sl<SharedPreferences>().clear();
             },
             child: RandomAvatar(seriesState.currentUserStats.avatarSeed,
                 width: 50),

@@ -7,21 +7,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-final questions = arcane; //! just change series source then run run()
+final questions = quests; //! just change series source then run run()
 void run() => saveSeriesAndQuestions(
       questions: questions,
       imgUrl:
-          '''https://firebasestorage.googleapis.com/v0/b/store-65e6b.appspot.com/o/movie%2Fseries_images%2Fdexter.png?alt=media&token=8a830b44-ffc3-4fc9-aebe-c713d198f06a''',
+          '''A drama about one of New York's most prestigious ad agencies at the beginning of the 1960s, focusing on one of the firm's most mysterious but extremely talented ad executives, Donald Draper.
+
+''',
 
       ///
       description:
-          '''Amid the stark discord of twin cities Piltover and Zaun, two 
-          sisters fight on rival sides of a war between magic technologies 
-          and clashing convictions.''',
+          '''Sheriff Deputy Rick Grimes wakes up from a coma to learn the world is in ruins and must lead a group of survivors to stay alive.
+''',
 
       ///
-      info: '2021–2024',
-      rating: '9.1',
+      info: '2010–2022',
+      rating: '8.1',
     );
 
 void saveSeriesAndQuestions({

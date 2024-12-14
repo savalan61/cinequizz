@@ -36,6 +36,8 @@ class _SignUpFormState extends State<SignUpForm> {
     super.dispose();
   }
 
+  var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final state = context.select((SignUpCubit bloc) => bloc.state);
@@ -90,9 +92,12 @@ class _SignUpFormState extends State<SignUpForm> {
                           itemBuilder: (context, index) {
                             return Tappable.scaled(
                               onTap: () {
-                                context
-                                    .read<SignUpCubit>()
-                                    .onSelectAvatar(avatarSeeds[index]);
+                                setState(() {
+                                  selectedIndex = index;
+                                });
+                                // context
+                                //     .read<SignUpCubit>()
+                                //     .onSelectAvatar(avatarSeeds[index]);
                                 context.pop();
                               },
                               child: RandomAvatar(avatarSeeds[index],
@@ -113,7 +118,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         size: 15,
                       ),
                       backgroundColor: AppColors.background,
-                      child: RandomAvatar(state.avatarSeed,
+                      child: RandomAvatar(avatarSeeds[selectedIndex],
                           height: 70, width: 70)),
                 ),
               ),
@@ -219,13 +224,13 @@ class _SignUpFormState extends State<SignUpForm> {
                   final email = fields.value['email'] as String;
                   final password = fields.value['password'] as String;
                   final userName = fields.value['userName'] as String;
-                  // final avatarSeed = _selectedAvatar.value;
+                  final avatarSeed = avatarSeeds[selectedIndex];
                   // Use avatarSeed as needed for profile creation
                   context.read<SignUpCubit>().onSubmit(
                         username: userName,
                         email: email,
                         password: password,
-                        // avatarSeed: avatarSeed,
+                        avatarSeed: avatarSeed,
                       );
                 },
               ),

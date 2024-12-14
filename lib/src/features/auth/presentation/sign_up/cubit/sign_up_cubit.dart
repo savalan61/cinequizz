@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart' show Cubit;
+import 'package:cinequizz/src/di.dart';
+import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:cinequizz/src/core/form_fields/_forms.dart';
 import 'package:cinequizz/src/core/shared/enums/_enums.dart';
@@ -12,20 +14,25 @@ class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit({
     required AuthRepositoryIf authRepositoryIf,
   })  : _userRepository = authRepositoryIf,
-        super(const SignUpState());
-
+        super(const SignUpState()) {}
+  late AuthUser user;
   final AuthRepositoryIf _userRepository;
+  // Future<void> _initializeUser() async {
+  //   user = await sl<AuthRepositoryIf>().user.first;
+  //   emit(state.copyWith(avatarSeed: user.avatarSeed));
+  // }
 
   void reset() {
     const password = Password.pure();
     const name = Username.pure();
 
     final newState = state.copyWith(
-        password: password,
-        name: name,
-        submissionStatus: SubmissionStatus.idle,
-        message: '',
-        avatarSeed: 'mahsa');
+      password: password,
+      name: name,
+      submissionStatus: SubmissionStatus.idle,
+      message: '',
+      // avatarSeed: '',
+    );
     emit(newState);
   }
 
@@ -33,7 +40,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     required String username,
     required String email,
     required String password,
-    // required String avatarSeed,
+    required String avatarSeed,
   }) async {
     emit(state.copyWith(submissionStatus: SubmissionStatus.inProgress));
 
@@ -42,13 +49,16 @@ class SignUpCubit extends Cubit<SignUpState> {
         username: username,
         email: email,
         password: password,
-        avatarSeed: state.avatarSeed,
+        avatarSeed: avatarSeed,
       );
       res.fold(
         (l) => emit(state.copyWith(
             submissionStatus: SubmissionStatus.error, message: l.message)),
         (r) {
-          emit(state.copyWith(submissionStatus: SubmissionStatus.success));
+          emit(state.copyWith(
+            submissionStatus: SubmissionStatus.success,
+            // avatarSeed: state.avatarSeed,
+          ));
         },
       );
     } catch (error, stackTrace) {
@@ -62,6 +72,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     }
   }
 
-  onSelectAvatar(String avatarSeed) =>
-      emit(state.copyWith(avatarSeed: avatarSeed));
+  // onSelectAvatar(String avatarSeed) =>
+  //     emit(state.copyWith(avatarSeed: avatarSeed));
 }

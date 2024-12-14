@@ -5,7 +5,7 @@ class SignUpState extends Equatable {
     this.name = const Username.pure(),
     this.email = const Email.pure(),
     this.password = const Password.pure(),
-    this.avatarSeed = 'mahsa',
+    // this.avatarSeed = 'Arsen',
     this.submissionStatus = SubmissionStatus.idle,
     this.message = '',
   });
@@ -14,7 +14,7 @@ class SignUpState extends Equatable {
   final Password password;
   final Username name;
   final SubmissionStatus submissionStatus;
-  final String avatarSeed;
+  // final String avatarSeed;
   final String message;
 
   SignUpState copyWith({
@@ -23,14 +23,14 @@ class SignUpState extends Equatable {
     Username? name,
     String? profilePicture,
     SubmissionStatus? submissionStatus,
-    String? avatarSeed,
+    // String? avatarSeed,
     String? message,
   }) =>
       SignUpState(
         email: email ?? this.email,
         password: password ?? this.password,
         name: name ?? this.name,
-        avatarSeed: avatarSeed ?? this.avatarSeed,
+        // avatarSeed: avatarSeed ?? this.avatarSeed,
         submissionStatus: submissionStatus ?? this.submissionStatus,
         message: message ?? this.message,
       );
@@ -40,7 +40,7 @@ class SignUpState extends Equatable {
         email,
         password,
         name,
-        avatarSeed,
+        // avatarSeed,
         submissionStatus,
         message,
       ];
