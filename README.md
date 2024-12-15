@@ -48,4 +48,12 @@ Feel free to check it out and share your feedback. Let's connect and discuss how
 
 #Flutter #MobileDevelopment #Firebase #OpenSource #Cinequizz #Dart #TechInnovation
 
-https://firebasestorage.googleapis.com/v0/b/store-65e6b.appspot.com/o/cinequizz.mp4?alt=media&token=e07059b1-508a-42eb-b396-855360e312df
+## Demo Video
+
+<div style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+    <video width="30%" controls style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <source src="https://firebasestorage.googleapis.com/v0/b/store-65e6b.appspot.com/o/cinequizz.mp4?alt=media&token=e07059b1-508a-42eb-b396-855360e312df" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+<b style="color: #FF5733;">Cinequizz</b>
