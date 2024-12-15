@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:cinequizz/src/core/extensions/_extensions.dart';
 import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
@@ -30,6 +31,7 @@ class QuestionPage extends StatefulWidget {
 class _QuestionPageState extends State<QuestionPage> {
   late QuestionCubit questionCubit;
   late AuthUser user;
+
   @override
   void initState() {
     super.initState();
@@ -65,18 +67,26 @@ class QuestionView extends StatefulWidget {
   });
   final String seriesId;
   final AuthUser user;
+
   @override
   State<QuestionView> createState() => _QuestionViewState();
 }
 
 class _QuestionViewState extends State<QuestionView> {
   final CountDownController timer = CountDownController();
+  final player = AudioPlayer();
+  @override
+  void dispose() {
+    player.stop();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    const bool autoStart = false;
+    const bool autoStart = true;
     final serieState = context.select((SeriesCubit bloc) => bloc.state);
     final userStats = serieState.currentUserStats;
+    player.setAudioSource(AudioSource.asset('assets/sounds/clock.mp3'));
 
     final answeredQuestions = userStats.answeredQuestions
         .firstWhere(
@@ -106,18 +116,21 @@ class _QuestionViewState extends State<QuestionView> {
             centerTitle: true,
             title: Row(
               children: [
-                Text('Total Score: '),
+                Text(
+                  'Total Score: ',
+                  style:
+                      context.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                ),
                 AnimatedFlipCounter(
                   duration: 1.seconds,
                   value: totalScore,
                   textStyle: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: totalScore > 0 ? AppColors.blue : AppColors.red,
                     shadows: [
                       BoxShadow(
                         color: totalScore > 0 ? AppColors.blue : AppColors.red,
-                        // offset: const Offset(1, 1),
                         blurRadius: 8,
                       ),
                     ],
@@ -193,14 +206,6 @@ class _QuestionViewState extends State<QuestionView> {
                       ),
                       SizedBox(height: 20),
 
-                      // LinearTimer(
-                      //   duration: const Duration(seconds: 5),
-                      //   onTimerEnd: () {
-                      //     print("timer ended");
-                      //   },
-                      // ),
-                      // const Spacer(),
-
                       //* Options
                       ...List.generate(
                         4,
@@ -241,6 +246,7 @@ class _QuestionViewState extends State<QuestionView> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(5),
                                   child: Row(
+                                    
                                     children: [
                                       CircleAvatar(
                                         backgroundColor: AppColors.deepBlue,
@@ -301,7 +307,9 @@ class _QuestionViewState extends State<QuestionView> {
                             isReverseAnimation: false,
                             isTimerTextShown: true,
                             autoStart: autoStart,
-                            onStart: () {},
+                            onStart: () {
+                              player.play();
+                            },
                             onComplete: () {
                               if (state.currentQuestionNo <
                                   currentSeries.totalQuestionNo - 1) {

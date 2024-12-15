@@ -1,4 +1,4 @@
-import 'package:cinequizz/src/core/extensions/tappable_extension.dart';
+import 'package:cinequizz/src/core/extensions/_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:random_avatar/random_avatar.dart';
@@ -22,10 +22,13 @@ class AppAppbar extends StatelessWidget implements PreferredSizeWidget {
               // sl<SharedPreferences>().clear();
             },
             child: RandomAvatar(seriesState.currentUserStats.avatarSeed,
-                width: 50),
+                width: 40),
           ),
           const SizedBox(width: AppSpacing.md),
-          Text(seriesState.currentUserStats.userName.toString()),
+          Text(
+            seriesState.currentUserStats.userName.toString(),
+            style: context.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+          ),
           const Spacer(),
           AnimatedFlipCounter(
             duration: 2.seconds,

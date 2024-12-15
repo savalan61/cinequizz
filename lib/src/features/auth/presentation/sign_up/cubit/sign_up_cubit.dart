@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart' show Cubit;
-import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/auth/domain/models/auth_user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:cinequizz/src/core/form_fields/_forms.dart';
@@ -14,7 +13,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit({
     required AuthRepositoryIf authRepositoryIf,
   })  : _userRepository = authRepositoryIf,
-        super(const SignUpState()) {}
+        super(const SignUpState());
   late AuthUser user;
   final AuthRepositoryIf _userRepository;
   // Future<void> _initializeUser() async {

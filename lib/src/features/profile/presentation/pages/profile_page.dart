@@ -1,7 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cinequizz/src/di.dart';
 import 'package:cinequizz/src/features/app/presentation/cubits/question_cubit/question_cubit.dart';
 import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
-import 'package:cinequizz/src/features/auth/presentation/sign_up/cubit/sign_up_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart' hide TextDirection;
@@ -10,6 +11,7 @@ import 'package:cinequizz/src/core/shared/widgets/_widgets.dart';
 import 'package:cinequizz/src/core/theme/_theme.dart';
 import 'package:cinequizz/src/features/auth/presentation/app/presentation/bloc/app_bloc.dart';
 import 'package:cinequizz/src/features/profile/presentation/widgets/user_credentials_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -52,7 +54,8 @@ class ProfileView extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: AppColors.background,
             title: const Text('Edit Profile'),
-            titleTextStyle: context.headlineSmall,
+            titleTextStyle:
+                context.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
             centerTitle: true,
             actions: [
               AppIcon.button(
@@ -105,7 +108,8 @@ class ProfileView extends StatelessWidget {
                                 .add(const AppLogoutRequested());
                             sl<QuestionCubit>().resetQuestionCubit();
                             sl<SeriesCubit>().resetSeriesCubit();
-                            // sl<SharedPreferences>().remove(AppConstants.isNewUser);
+                            // sl<SharedPreferences>()
+                            //     .remove(AppConstants.isNewUser);
                           },
                           title: 'Logout',
                           content: 'Are you sure to logout from your account?',

@@ -1,14 +1,11 @@
-import 'package:cinequizz/src/core/extensions/build_context_extension.dart';
-import 'package:cinequizz/src/core/shared/widgets/app_constrained_scroll_view.dart';
-import 'package:cinequizz/src/core/shared/widgets/app_scaffold.dart';
-import 'package:cinequizz/src/core/theme/_theme.dart';
-import 'package:cinequizz/src/di.dart';
-import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
 import 'package:cinequizz/src/features/app/presentation/widgets/app_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:cinequizz/src/core/theme/_theme.dart';
+import 'package:cinequizz/src/core/shared/widgets/app_constrained_scroll_view.dart';
+import 'package:cinequizz/src/core/shared/widgets/app_scaffold.dart';
+import 'package:cinequizz/src/features/app/presentation/cubits/series_cubit/series_cubit.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
@@ -18,166 +15,190 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
-  int touchedIndex = -1;
+  int touchedUserIndex = -1;
+  int touchedSeriesIndex = -1;
 
   @override
   void initState() {
     super.initState();
-    sl<SeriesCubit>().fetchUserStats();
+    context.read<SeriesCubit>().fetchUserStats();
   }
 
   @override
   Widget build(BuildContext context) {
-    final userStats =
-        context.select((SeriesCubit bloc) => bloc.state).currentUserStats;
-
-    final correctNo = userStats.correctNo;
-    final wrongNo = userStats.wrongNo;
-    final unAnsweredNo = userStats.totalNoAnswers - (correctNo + wrongNo);
-    final totalNoAnswers = userStats.totalNoAnswers;
-
     return BlocBuilder<SeriesCubit, SeriesState>(
       builder: (context, state) {
-        return state.status == SeriesStatus.success
-            ? AppScaffold(
-                appBar: AppAppbar(seriesState: state),
-                body: AppConstrainedScrollView(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Pie Chart
-                        SizedBox(
-                          height: context.screenHeight / 4,
-                          child: PieChart(
-                            PieChartData(
-                              pieTouchData: PieTouchData(
-                                touchCallback:
-                                    (FlTouchEvent event, pieTouchResponse) {
-                                  setState(() {
-                                    if (!event.isInterestedForInteractions ||
-                                        pieTouchResponse == null ||
-                                        pieTouchResponse.touchedSection ==
-                                            null) {
-                                      touchedIndex = -1;
-                                      return;
-                                    }
-                                    touchedIndex = pieTouchResponse
-                                        .touchedSection!.touchedSectionIndex;
-                                  });
-                                },
-                              ),
-                              borderData: FlBorderData(
-                                show: false,
-                              ),
-                              sectionsSpace: 2,
-                              centerSpaceRadius: 30,
-                              sections: showingSections(correctNo, wrongNo,
-                                  unAnsweredNo, totalNoAnswers),
-                            ),
-                          ),
-                        ),
-                        // Statistics
-                        SizedBox(
-                          // height: context.screenHeight / 8,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  _buildLegendItem(AppColors.blue, 'Correct ',
-                                      correctNo, LucideIcons.squareCheck),
-                                  const SizedBox(height: AppSpacing.md),
-                                  _buildLegendItem(AppColors.grey, 'skipped ',
-                                      unAnsweredNo, LucideIcons.square),
-                                ],
-                              ),
-                              const SizedBox(width: 16),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  _buildLegendItem(AppColors.red, 'Wrong ',
-                                      wrongNo, LucideIcons.squareX),
-                                  const SizedBox(height: AppSpacing.md),
-                                  _buildLegendItem(
-                                      AppColors.darkGrey,
-                                      'Answered ',
-                                      totalNoAnswers,
-                                      LucideIcons.rows4),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: AppSize.md,
-                        ),
-                        const Divider(),
-                      ],
+        if (state.status != SeriesStatus.success) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final userStats = state.currentUserStats;
+
+        final correctNo = userStats.correctNo;
+        final wrongNo = userStats.wrongNo;
+        final unAnsweredNo = userStats.totalNoAnswers - (correctNo + wrongNo);
+        final totalNoAnswers = userStats.totalNoAnswers;
+
+        final totalQuestions = state.series.fold<int>(
+          0,
+          (sum, element) => sum + element.totalQuestionNo,
+        );
+
+        return AppScaffold(
+          appBar: AppAppbar(seriesState: state),
+          body: AppConstrainedScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text('User Statistics'),
+                  _buildPieChart(
+                    title: 'User Statistics',
+                    sections: _buildUserSections(
+                      correctNo,
+                      wrongNo,
+                      unAnsweredNo,
+                      totalNoAnswers,
                     ),
+                    touchedIndex: touchedUserIndex,
+                    onSectionTouch: (index) {
+                      setState(() => touchedUserIndex = index);
+                    },
                   ),
-                ),
-              )
-            : const Center(
-                child: CircularProgressIndicator(),
-              );
+                  _buildLegend([
+                    _LegendData(AppColors.blue, 'Correct', correctNo),
+                    _LegendData(AppColors.red, 'Wrong', wrongNo),
+                    _LegendData(AppColors.grey, 'Skipped', unAnsweredNo),
+                  ]),
+                  const Divider(),
+                  const Text('Series Statistics'),
+                  _buildPieChart(
+                    title: 'Series Statistics',
+                    sections: _buildSeriesSections(
+                      totalNoAnswers,
+                      totalQuestions,
+                    ),
+                    touchedIndex: touchedSeriesIndex,
+                    onSectionTouch: (index) {
+                      setState(() => touchedSeriesIndex = index);
+                    },
+                  ),
+                  _buildLegend([
+                    _LegendData(
+                        AppColors.blue, 'Total Questions', totalQuestions),
+                    _LegendData(
+                        AppColors.red, 'Total Answered', totalNoAnswers),
+                  ]),
+                ],
+              ),
+            ),
+          ),
+        );
       },
     );
   }
 
-  List<PieChartSectionData> showingSections(
-      int correctNo, int wrongNo, int unAnsweredNo, int totalNoAnswers) {
+  Widget _buildPieChart({
+    required String title,
+    required List<PieChartSectionData> sections,
+    required int touchedIndex,
+    required void Function(int index) onSectionTouch,
+  }) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 4,
+      child: PieChart(
+        PieChartData(
+          pieTouchData: PieTouchData(
+            touchCallback: (event, response) {
+              if (!event.isInterestedForInteractions ||
+                  response?.touchedSection == null) {
+                onSectionTouch(-1);
+                return;
+              }
+              onSectionTouch(response!.touchedSection!.touchedSectionIndex);
+            },
+          ),
+          borderData: FlBorderData(show: false),
+          sectionsSpace: 2,
+          centerSpaceRadius: 30,
+          sections: sections,
+        ),
+      ),
+    );
+  }
+
+  List<PieChartSectionData> _buildUserSections(
+    int correctNo,
+    int wrongNo,
+    int unAnsweredNo,
+    int totalNoAnswers,
+  ) {
     return [
-      _buildPieChartSection(0, touchedIndex, correctNo.toDouble(),
-          AppColors.blue, 'Correct', totalNoAnswers),
-      _buildPieChartSection(1, touchedIndex, wrongNo.toDouble(), AppColors.red,
-          'Wrong', totalNoAnswers),
-      _buildPieChartSection(2, touchedIndex, unAnsweredNo.toDouble(),
-          AppColors.grey, 'Unanswered', totalNoAnswers),
+      _buildPieSection(0, touchedUserIndex, correctNo, AppColors.blue,
+          'Correct', totalNoAnswers),
+      _buildPieSection(
+          1, touchedUserIndex, wrongNo, AppColors.red, 'Wrong', totalNoAnswers),
+      _buildPieSection(2, touchedUserIndex, unAnsweredNo, AppColors.grey,
+          'Skipped', totalNoAnswers),
     ];
   }
 
-  PieChartSectionData _buildPieChartSection(int index, int? touchedIndex,
-      double value, Color color, String title, int totalNoAnswers) {
+  List<PieChartSectionData> _buildSeriesSections(
+    int totalNoAnswers,
+    int totalQuestions,
+  ) {
+    return [
+      _buildPieSection(0, touchedSeriesIndex, totalNoAnswers, AppColors.red,
+          'Answered', totalQuestions),
+      _buildPieSection(1, touchedSeriesIndex, totalQuestions, AppColors.blue,
+          'Total', totalQuestions + totalNoAnswers),
+    ];
+  }
+
+  PieChartSectionData _buildPieSection(
+    int index,
+    int touchedIndex,
+    int value,
+    Color color,
+    String title,
+    int total,
+  ) {
     final isTouched = index == touchedIndex;
-    final fontSize = isTouched ? 25.0 : 16.0;
-    final radius = isTouched ? 60.0 : 50.0;
-    final percentage = (value / totalNoAnswers) * 100;
+    final percentage = total == 0 ? 0 : (value / total) * 100;
+
     return PieChartSectionData(
       color: color,
-      value: totalNoAnswers == 0 ? 120 : value,
-      title: '${totalNoAnswers == 0 ? 0 : percentage.toStringAsFixed(0)}%',
-      radius: radius,
+      value: value.toDouble(),
+      title: '${percentage.toStringAsFixed(1)}%',
+      radius: isTouched ? 60 : 50,
       titleStyle: TextStyle(
-        fontSize: fontSize,
+        fontSize: isTouched ? 18 : 14,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),
     );
   }
 
-  Widget _buildLegendItem(
-    Color color,
-    String title,
-    int value,
-    IconData icon,
-  ) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: color,
-        ),
-        const SizedBox(width: 8),
-        Text('$title: $value'),
-      ],
+  Widget _buildLegend(List<_LegendData> data) {
+    return Column(
+      children: data.map((item) {
+        return Row(
+          children: [
+            Icon(Icons.square, color: item.color),
+            const SizedBox(width: 8),
+            Text('${item.title}: ${item.value}'),
+          ],
+        );
+      }).toList(),
     );
   }
+}
+
+class _LegendData {
+  final Color color;
+  final String title;
+  final int value;
+
+  _LegendData(this.color, this.title, this.value);
 }

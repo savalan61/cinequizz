@@ -31,7 +31,10 @@ class _LeaderboardState extends State<Leaderboard> {
     return AppScaffold(
       appBar: AppBar(
         backgroundColor: AppColors.background,
-        title: const Text('Leader Board'),
+        title: Text(
+          'Leader Board',
+          style: context.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: BlocBuilder<SeriesCubit, SeriesState>(
@@ -66,7 +69,7 @@ class _LeaderboardState extends State<Leaderboard> {
                     elevation: 5,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
-                    shadowColor: isMe ? Colors.red : AppColors.blue,
+                    shadowColor: isMe ? Colors.red : null,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
